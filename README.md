@@ -1,1 +1,1 @@
-# Develog
+Develog
