@@ -8,12 +8,14 @@
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "prepare": "husky"
+    "prepare": "husky",
+    "sort:css": "postcss '**/*.css' --replace"
   },
   "dependencies": {
+    "jotai": "^2.9.0",
+    "normalize.css": "^8.0.1",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "zustand": "^4.5.4"
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.7.0",
@@ -35,6 +37,10 @@
     "globals": "^15.8.0",
     "husky": "^9.0.11",
     "lint-staged": "^15.2.7",
+    "postcss": "^8.4.39",
+    "postcss-cli": "^11.0.0",
+    "postcss-import": "^14.1.0",
+    "postcss-sorting": "^8.0.2",
     "prettier": "3.3.3",
     "vite": "^5.3.1"
   },

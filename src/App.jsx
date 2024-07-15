@@ -1,19 +1,9 @@
-import './App.css';
-import AddDataComponent from './components/AddDataComponent';
-import FetchDataComponent from './components/FetchDataComponent';
+import React from 'react';
+import './assets/css/global.css';
+import Login from './pages/Login/Login';
 
 function App() {
-  return (
-    <>
-      <div>
-        <div>
-          <h1>My App</h1>
-          <AddDataComponent />
-          <FetchDataComponent />
-        </div>
-      </div>
-    </>
-  );
+  return <Login />;
 }
 
 export default App;

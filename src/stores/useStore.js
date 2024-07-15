@@ -1,10 +1,17 @@
-import { create } from 'zustand';
+import React from 'react';
+import { atom, useAtom } from 'jotai';
 
-const useStore = create(set => ({
-  bears: 0,
-  increasePopulation: () => set(state => ({ bears: state.bears + 1 })),
-  removeAllBears: () => set({ bears: 0 }),
-  updateBears: newBears => set({ bears: newBears }),
-}));
+const countAtom = atom(0);
 
-export default useStore;
+const Counter = () => {
+  const [count, setCount] = useAtom(countAtom);
+  return (
+    <div>
+      <h1>{count}</h1>
+      <button onClick={() => setCount(count + 1)}>Increase</button>
+      <button onClick={() => setCount(count - 1)}>Decrease</button>
+    </div>
+  );
+};
+
+export default Counter;
