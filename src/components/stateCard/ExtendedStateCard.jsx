@@ -3,7 +3,7 @@ import PieChart from '../chart/PieChart';
 import styles from './stateCard.module.css';
 
 const ExtendedStateCard = ({ icon, items }) => {
-  if (icon === 'investmentProfile') {
+  if (icon === 'investmentProfile' || icon === 'people') {
     const chartData = {
       labels: items.map(item => item.label),
       datasets: [
@@ -16,7 +16,7 @@ const ExtendedStateCard = ({ icon, items }) => {
     };
 
     return (
-      <div className={styles.ExtendedStateCard}>
+      <div className={styles.extendedStateCard}>
         <div className={styles.pieChart}>
           <PieChart data={chartData} />
         </div>
@@ -39,7 +39,7 @@ const ExtendedStateCard = ({ icon, items }) => {
   }
 
   return (
-    <div className={styles.ExtendedStateCard}>
+    <div className={styles.extendedStateCard}>
       <div className={styles.items}>
         {items.map((item, index) => (
           <React.Fragment key={index}>

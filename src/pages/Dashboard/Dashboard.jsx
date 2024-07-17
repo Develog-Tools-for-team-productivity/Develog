@@ -53,7 +53,7 @@ const Dashboard = () => {
     <>
       <Header headerText="Dashboard" />
       <div className={styles.teamViewContainer}>
-        <TeamViewHeader />
+        <TeamViewHeader dateSelect={true} />
         <div className={styles.insight}>
           {stats.map((stat, index) => (
             <StateCard

@@ -16,6 +16,17 @@ const StateCard = ({ icon, value, label, extendedStats }) => {
         />
       );
     }
+    if (icon === 'people') {
+      return (
+        <div className={styles.trackerTeamView}>
+          <h4>Investment Profile</h4>
+          <ExtendedStateCard
+            icon={icon}
+            items={extendedStats.investmentProfile.items}
+          />
+        </div>
+      );
+    }
     return null;
   };
 

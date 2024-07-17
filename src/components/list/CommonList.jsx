@@ -1,3 +1,5 @@
+import ListStateCard from '../../components/stateCard/ListStateCard';
+import ListPieChartCard from '../../components/stateCard/ListPieChartCard';
 import styles from './list.module.css';
 
 const CommonList = ({ headers, data }) => {
@@ -26,7 +28,18 @@ const CommonList = ({ headers, data }) => {
             <tr key={index}>
               {Object.entries(item).map(([key, value], i) => (
                 <td key={i}>
-                  {value}
+                  {key === 'activePeople' || key === 'delivery' ? (
+                    <ListStateCard
+                      key={index}
+                      icon={value.icon}
+                      value={value.value}
+                      label={value.label}
+                    />
+                  ) : key === 'investmentProfile' ? (
+                    <ListPieChartCard items={value} />
+                  ) : (
+                    value
+                  )}
                   {dotColumns.includes(key) && (
                     <span className={styles.redDot}></span>
                   )}

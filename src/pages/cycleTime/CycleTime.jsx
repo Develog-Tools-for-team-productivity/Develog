@@ -144,7 +144,7 @@ const CycleTime = () => {
       <div
         className={`${styles.teamViewContainer} ${styles.cycleTimeTeamView}`}
       >
-        <TeamViewHeader />
+        <TeamViewHeader dateSelect={true} />
         {stats.map((stat, index) => (
           <StateCard
             key={index}
