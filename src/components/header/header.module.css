@@ -1,0 +1,50 @@
+.teamInfo {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.teamInfo span {
+  width: 30px;
+  color: #fff;
+  border-radius: 10px;
+  font-size: 12px;
+  line-height: 30px;
+  text-align: center;
+  background-color: #647ae4;
+}
+
+.teamInfo p {
+  font-size: 14px;
+}
+
+.teamInfo button {
+  width: 20px;
+  height: 20px;
+  background: url('../../assets/img/iconSprites.png') no-repeat -215px -301px;
+  background-color: #647ae4;
+}
+
+.teamViewHeaderWrap {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.teamName {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  gap: 15px;
+}
+
+.teamName span {
+  display: block;
+  width: 30px;
+  color: #fff;
+  border-radius: 999px;
+  font-size: 12px;
+  line-height: 30px;
+  text-align: center;
+  background-color: #647ae4;
+}

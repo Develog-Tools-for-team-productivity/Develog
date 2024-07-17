@@ -1,0 +1,85 @@
+.sidebarContainer {
+  width: calc(100% - 80%);
+  padding: 60px 0 60px 40px;
+}
+
+.sidebarLogo {
+  display: block;
+  width: 124px;
+  height: 113px;
+  background: url('../../assets/img/iconSprites.png') no-repeat -251px -10px;
+}
+
+.sidebarContainer ul {
+  margin-top: 70px;
+}
+
+.sidebarContainer li a {
+  position: relative;
+  display: flex;
+  align-items: center;
+  color: #b1b0b4;
+  font-size: 16px;
+  line-height: 60px;
+  gap: 15px;
+  margin-bottom: 60px;
+}
+
+.sidebarContainer .on {
+  color: #647ae4;
+  border-radius: 10px;
+  background-color: #eeedf1;
+  padding-left: 30px;
+}
+
+.on::after {
+  position: absolute;
+  top: 0;
+  right: -35px;
+  display: block;
+  width: 5px;
+  height: 60px;
+  border-radius: 2px;
+  content: '';
+  background-color: #647ae4;
+}
+
+.sidebarContainer li span {
+  display: block;
+}
+
+.dashboardList span {
+  width: 29px;
+  height: 27px;
+  background: url('../../assets/img/iconSprites.png') no-repeat -59px -306px;
+}
+
+.dashboardList.on span {
+  width: 29px;
+  height: 27px;
+  background: url('../../assets/img/iconSprites.png') no-repeat -10px -306px;
+}
+
+.cycleTimeList span {
+  width: 31px;
+  height: 31px;
+  background: url('../../assets/img/iconSprites.png') no-repeat -327px -227px;
+}
+
+.cycleTimeList.on span {
+  width: 31px;
+  height: 31px;
+  background: url('../../assets/img/iconSprites.png') no-repeat -272px -227px;
+}
+
+.trackerList span {
+  width: 26px;
+  height: 26px;
+  background: url('../../assets/img/iconSprites.png') no-repeat -431px -227px;
+}
+
+.trackerList.on span {
+  width: 26px;
+  height: 26px;
+  background: url('../../assets/img/iconSprites.png') no-repeat -381px -227px;
+}

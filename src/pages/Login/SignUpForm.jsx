@@ -1,7 +1,6 @@
-import React from 'react';
-import Input from '../../components/Input';
-import Button from '../../components/Button';
-import SelectBox from '../../components/SelectBox';
+import Input from '../../components/input/Input';
+import Button from '../../components/button/Button';
+import SelectBox from '../../components/select/SelectBox';
 import styles from './login.module.css';
 
 const SignUpForm = () => {

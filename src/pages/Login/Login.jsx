@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+
 import AuthHeader from './AuthHeader';
 import LoginForm from './LoginForm';
 import SignUpForm from './SignUpForm';
+
 import styles from './login.module.css';
 import illustImg from '../../assets/img/illustImg.png';
 

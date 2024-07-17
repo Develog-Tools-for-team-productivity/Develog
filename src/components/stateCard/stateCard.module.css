@@ -1,0 +1,169 @@
+.ExtendedStateCard {
+  display: flex;
+  align-items: center;
+  width: calc(100% - 245px);
+  margin: 10px 0;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #f5f5f5;
+}
+
+.ExtendedStateCard h3 {
+  margin: 0;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.ExtendedStateCard .items {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 20px;
+}
+
+.ExtendedStateCard .item {
+  display: flex;
+  flex-direction: column;
+  width: 146px;
+}
+
+.ExtendedStateCard .item .label {
+  overflow: hidden;
+  font-size: 12px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-bottom: 10px;
+}
+
+.ExtendedStateCard .value {
+  position: relative;
+  font-size: 20px;
+  font-weight: bold;
+  padding-bottom: 12px;
+}
+
+.ExtendedStateCard .item .label {
+  overflow: hidden;
+  font-size: 12px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-bottom: 10px;
+}
+
+.ExtendedStateCard .value {
+  position: relative;
+  font-size: 20px;
+  font-weight: bold;
+  padding-bottom: 12px;
+}
+
+.ExtendedStateCard .value.dash:after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 2px;
+  border-radius: 2px;
+  content: '';
+  background-color: #647ae4;
+}
+
+.ExtendedStateCard .label {
+  color: #b1b0b4;
+}
+
+.bar {
+  height: 2px;
+  border-radius: 2px;
+}
+
+.pieChart {
+  margin-right: 30px;
+  position: relative;
+}
+
+.pieChart:after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  content: '';
+  display: block;
+  border-radius: 999px;
+  width: 50px;
+  height: 50px;
+  background-color: #f5f5f5;
+}
+
+.teamViewArrow {
+  width: 7px;
+  height: 60px;
+  background: url('../../assets/img/iconSprites.png') no-repeat -192px -282px;
+}
+
+.stateCard {
+  display: flex;
+  align-items: center;
+  min-width: 230px;
+  gap: 18px;
+}
+
+.extended {
+  width: calc(100% - 240px);
+}
+
+.content {
+  width: 146px;
+}
+
+.content h3 {
+  font-size: 20px;
+}
+
+.content p {
+  color: #b1b0b4;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.teamViewContainer {
+  padding: 30px;
+  border-radius: 30px;
+  background-color: #eeedf1;
+  margin-bottom: 20px;
+}
+
+.teamViewContainer .insight {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.cycleTimeTeamView .extended {
+  width: 100%;
+}
+
+.gitCommit {
+  width: 62px;
+  height: 62px;
+  background: url('../../assets/img/iconSprites.png') no-repeat -10px -143px;
+}
+
+.cycleTime {
+  width: 62px;
+  height: 62px;
+  background: url('../../assets/img/iconSprites.png') no-repeat -256px -143px;
+}
+
+.gitContributors {
+  width: 62px;
+  height: 62px;
+  background: url('../../assets/img/iconSprites.png') no-repeat -92px -143px;
+}
+
+.investmentProfile {
+  width: 62px;
+  height: 62px;
+  background: url('../../assets/img/iconSprites.png') no-repeat -174px -143px;
+}

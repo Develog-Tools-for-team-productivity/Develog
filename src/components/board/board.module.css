@@ -1,0 +1,10 @@
+.mainBoard {
+  padding: 30px;
+  border-radius: 30px;
+  background-color: #eeedf1;
+  gap: 30px;
+}
+
+.mainBoard h3 {
+  margin-bottom: 30px;
+}

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import styles from './select.module.css';
 
 const SelectBox = ({ options, defaultText }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,19 +15,19 @@ const SelectBox = ({ options, defaultText }) => {
   };
 
   return (
-    <div className="customSelect">
-      <div className="selectBox" onClick={handleSelectClick}>
+    <div className={styles.selectWrap}>
+      <div className={styles.selectBox} onClick={handleSelectClick}>
         <span className={selectedOption === defaultText ? 'defaultOption' : ''}>
           {selectedOption}
         </span>
-        <span className="arrow"></span>
+        <span className={styles.arrow}></span>
       </div>
       {isOpen && (
-        <div className="options">
+        <div className={styles.options}>
           {options.map(option => (
             <div
               key={option.id}
-              className="option"
+              className={styles.option}
               onClick={() => handleOptionClick(option)}
             >
               {option.name}

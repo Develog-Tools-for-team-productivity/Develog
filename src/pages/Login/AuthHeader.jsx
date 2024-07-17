@@ -1,5 +1,5 @@
-import React from 'react';
-import styles from './login.module.css'; // 올바른 경로로 CSS 모듈 import
+
+import styles from './login.module.css';
 
 const AuthHeader = ({ showSignUp }) => {
   return (

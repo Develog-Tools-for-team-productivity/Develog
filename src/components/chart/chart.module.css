@@ -1,0 +1,25 @@
+.chartContainer {
+  padding: 30px 20px;
+  border-radius: 20px;
+  flex: 49%;
+  background-color: #f5f5f5;
+}
+
+.chartContainer h4 {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  gap: 10px;
+}
+
+.chartInfo {
+  display: block;
+  width: 18px;
+  height: 18px;
+  background: url('../img/iconSprites.png') no-repeat -153px -307px;
+}
+
+.pieChart {
+  width: 70px;
+  height: 70px;
+}
