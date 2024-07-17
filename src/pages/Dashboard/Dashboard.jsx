@@ -3,9 +3,10 @@ import TeamViewHeader from '../../components/header/TeamViewHeader';
 import StateCard from '../../components/stateCard/StateCard';
 import MainBoard from '../../components/board/MainBoard';
 import DoraMetrics from '../../components/dorametrics/DoraMetrics';
+
 import styles from '../../components/stateCard/stateCard.module.css';
 
-const DashBoard = () => {
+const Dashboard = () => {
   const stats = [
     {
       icon: 'gitCommit',
@@ -72,4 +73,4 @@ const DashBoard = () => {
   );
 };
 
-export default DashBoard;
+export default Dashboard;

@@ -1,4 +1,3 @@
-
 import styles from './login.module.css';
 
 const AuthHeader = ({ showSignUp }) => {

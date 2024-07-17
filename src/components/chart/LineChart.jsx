@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import 'chart.js/auto';
 import 'chartjs-adapter-date-fns';
+
 import styles from './chart.module.css';
 
 const LineChart = ({ chartTitle, chartData }) => {

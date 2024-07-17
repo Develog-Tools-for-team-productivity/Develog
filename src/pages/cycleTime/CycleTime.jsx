@@ -1,9 +1,9 @@
-
 import Header from '../../components/header/Header';
 import TeamViewHeader from '../../components/header/TeamViewHeader';
 import StateCard from '../../components/stateCard/StateCard';
 import MainBoard from '../../components/board/MainBoard';
 import CommonList from '../../components/list/CommonList';
+
 import styles from '../../components/stateCard/stateCard.module.css';
 
 const CycleTime = () => {

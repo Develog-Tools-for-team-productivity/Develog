@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import './assets/css/global.css';
+
+import Login from './pages/login/Login';
 import Sidebar from './components/sidebar/Sidebar';
-import DashBoard from './pages/dashBoard/DashBoard';
+import Dashboard from './pages/dashboard/Dashboard';
 import CycleTime from './pages/cycleTime/CycleTime';
 import ProjectDeliveryTracker from './pages/projectDeliveryTracker/ProjectDeliveryTracker';
-import Login from './pages/login/Login';
+
+import './assets/css/global.css';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
@@ -17,7 +19,7 @@ function App() {
           <Sidebar />
           <main className="main-content">
             <Routes>
-              <Route path="/" element={<DashBoard />} />
+              <Route path="/" element={<Dashboard />} />
               <Route path="/cycle-time" element={<CycleTime />} />
               <Route
                 path="/project-delivery-tracker"
