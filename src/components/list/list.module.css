@@ -17,9 +17,6 @@
 }
 
 .commonList th {
-  position: sticky;
-  z-index: 1;
-  top: 0;
   font-size: 14px;
   font-weight: bold;
   background-color: #eeedf1;
@@ -42,6 +39,18 @@
   font-size: 14px;
 }
 
+thead tr th:first-child {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  padding-left: 20px;
+}
+
+thead tr th:last-child {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  padding-right: 20px;
+}
+
 tbody tr td:first-child {
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
@@ -61,4 +70,185 @@ tbody tr td:last-child {
   border-radius: 999px;
   background-color: #e7595a;
   margin-left: 10px;
+}
+
+.projectHeader {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 30px;
+  border-radius: 10px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+  background-color: #f9f9f9;
+}
+
+.projectHeader li {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  gap: 40px;
+}
+
+.projectHeader li:first-of-type {
+  width: 170px;
+}
+
+.projectHeader li:last-of-type {
+  width: 444px;
+}
+
+.projectHeader li div {
+  width: 80px;
+}
+
+.projectHeader li div p {
+  width: 100%;
+  text-align: center;
+}
+
+.projectHeader li div span {
+  display: block;
+  width: 100%;
+  color: #b1b0b4;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.peopleEffort {
+  display: block;
+  width: 40px;
+  height: 40px;
+  background: url('../../assets/img/iconSprites.png') no-repeat -150px -225px;
+}
+
+.investmentProfile {
+  display: block;
+  width: 40px;
+  height: 40px;
+  background: url('../../assets/img/iconSprites.png') no-repeat -90px -225px;
+}
+
+.projectDelivery {
+  display: block;
+  width: 40px;
+  height: 40px;
+  background: url('../../assets/img/iconSprites.png') no-repeat -418px -143px;
+}
+
+.planningAccuracy {
+  display: block;
+  width: 40px;
+  height: 40px;
+  background: url('../../assets/img/iconSprites.png') no-repeat -210px -225px;
+}
+
+.projectList table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  table-layout: fixed;
+}
+
+.projectList thead {
+  font-size: 14px;
+  font-weight: bold;
+  background-color: #f9f9f9;
+}
+
+.projectList thead th {
+  padding: 20px 20px;
+}
+
+.projectList thead th .sprint span {
+  color: #b1b0b4;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 25px;
+}
+
+.projectList tbody td {
+  padding: 30px 10px;
+  font-size: 14px;
+}
+
+.projectList tbody td:first-of-type {
+  padding-left: 40px;
+}
+
+.projectList tbody td:first-of-type span {
+  margin-bottom: 10px;
+}
+
+.projectList tbody tr {
+  background-color: #f9f9f9;
+}
+
+.projectGraph {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.projectGraph p {
+  font-size: 18px;
+}
+
+.projectGraph p span {
+  font-size: 12px;
+  margin-top: 10px;
+}
+
+.mostActive {
+  font-size: 14px;
+}
+
+.mostActive a {
+  color: #b1b0b4;
+  font-size: 10px;
+  margin-left: 10px;
+}
+
+.mostActive ul {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 24px;
+}
+
+.mostActive ul li {
+  width: 50%;
+}
+
+.mostActive ul span {
+  display: block;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  background-color: #b1b0b4;
+}
+
+.mostActive ul .mostActiveName {
+  font-size: 10px;
+  margin-top: 10px;
+}
+
+.mostActive ul .mostActiveActive {
+  color: #b1b0b4;
+  font-size: 10px;
+}
+
+.chartList li {
+  display: flex;
+  align-items: center;
+  font-size: 11px;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.chartColor {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
 }

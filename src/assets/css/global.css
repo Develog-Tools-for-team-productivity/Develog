@@ -69,3 +69,7 @@ h3 {
   font-size: 30px;
   -webkit-text-stroke: 0.5px #333;
 }
+
+.pointer {
+  cursor: pointer;
+}

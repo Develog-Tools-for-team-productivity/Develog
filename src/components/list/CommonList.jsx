@@ -2,7 +2,7 @@ import ListStateCard from '../../components/stateCard/ListStateCard';
 import ListPieChartCard from '../../components/stateCard/ListPieChartCard';
 import styles from './list.module.css';
 
-const CommonList = ({ headers, data }) => {
+const CommonList = ({ headers, data, page, setState }) => {
   const dotColumns = [
     'cycleTime',
     'codingTime',
@@ -12,6 +12,12 @@ const CommonList = ({ headers, data }) => {
     'commits',
     'prSize',
   ];
+
+  const openProjectList = () => {
+    if (page === 'ProjectDeliveryTracker') {
+      setState(false);
+    }
+  };
 
   return (
     <div className={styles.commonList}>
@@ -25,7 +31,11 @@ const CommonList = ({ headers, data }) => {
         </thead>
         <tbody>
           {data.map((item, index) => (
-            <tr key={index}>
+            <tr
+              key={index}
+              onClick={openProjectList}
+              className={page === 'ProjectDeliveryTracker' && 'pointer'}
+            >
               {Object.entries(item).map(([key, value], i) => (
                 <td key={i}>
                   {key === 'activePeople' || key === 'delivery' ? (

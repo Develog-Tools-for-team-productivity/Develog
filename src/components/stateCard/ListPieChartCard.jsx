@@ -3,7 +3,6 @@ import PieChart from '../chart/PieChart';
 import styles from './stateCard.module.css';
 
 const ListPieChartCard = ({ items }) => {
-  console.log(items);
   const chartData = {
     labels: items.map(item => item.label),
     datasets: [
