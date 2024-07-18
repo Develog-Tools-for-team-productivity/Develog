@@ -1,9 +1,9 @@
 import styles from './login.module.css';
 
-const AuthHeader = ({ showSignUp }) => {
+const AuthHeader = ({ isSignUpPage }) => {
   return (
     <div className={styles.authHeader}>
-      {showSignUp === 'login' ? (
+      {!isSignUpPage ? (
         <>
           <span className={styles.authHeaderEmoji}>👋</span>
           <h2>Welcome back!</h2>

@@ -8,7 +8,7 @@ import styles from './login.module.css';
 import illustImg from '../../assets/img/illustImg.png';
 
 const Login = () => {
-  const [showSignUp, setShowSignUp] = useState(true);
+  const [showSignUp, setShowSignUp] = useState(false);
 
   return (
     <section className={styles.loginSection}>
@@ -24,8 +24,12 @@ const Login = () => {
         </p>
       </div>
       <div className={styles.rightLayout}>
-        <AuthHeader showSignUp />
-        {showSignUp ? <SignUpForm /> : <LoginForm />}
+        <AuthHeader isSignUpPage={showSignUp} />
+        {showSignUp ? (
+          <SignUpForm />
+        ) : (
+          <LoginForm setShowSignUp={setShowSignUp} />
+        )}
       </div>
     </section>
   );

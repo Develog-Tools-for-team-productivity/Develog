@@ -8,7 +8,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 28%;
+  width: 40%;
   padding: 4%;
   color: #fff;
   font-size: 40px;
@@ -21,7 +21,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 65%;
+  width: 100%;
   background-color: #f3f5ff;
   padding-bottom: 5%;
 }
@@ -56,6 +56,7 @@
 }
 
 .authHeaderEmoji {
+  margin-bottom: 20px;
   font-size: 40px;
 }
 
@@ -64,7 +65,7 @@
 }
 
 .authHeader p {
-  margin: 0;
+  margin: 20px 0 0 0;
   font-size: 14px;
 }
 
@@ -83,6 +84,7 @@
   color: #b1b0b4;
   font-size: 14px;
   text-align: center;
+  cursor: pointer;
 }
 
 .gitHubInput {
