@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useAtom } from 'jotai';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { isLoggedInAtom } from './stores/useStore';
 
 import Login from './pages/login/Login';
 import Sidebar from './components/sidebar/Sidebar';
@@ -10,7 +11,7 @@ import ProjectDeliveryTracker from './pages/projectDeliveryTracker/ProjectDelive
 import './assets/css/global.css';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn] = useAtom(isLoggedInAtom);
 
   return (
     <Router>
