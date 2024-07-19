@@ -1,13 +1,30 @@
-import Button from '../button/Button';
 import styles from './input.module.css';
 
-const Input = ({ labelTxt, placeholder, withButton, buttonText }) => {
+const Input = ({
+  labelTxt,
+  placeholder,
+  value,
+  onChange,
+  type = 'text',
+  withButton,
+  buttonText,
+  onButtonClick,
+}) => {
   return (
     <div className={styles.inputWrap}>
       <label>{labelTxt}</label>
       <div className={styles.inputFieldWrapper}>
-        <input type="text" placeholder={placeholder}></input>
-        {withButton && <Button text={buttonText} />}
+        <input
+          type={type}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+        ></input>
+        {withButton && (
+          <button type="button" onClick={onButtonClick}>
+            {buttonText}
+          </button>
+        )}
       </div>
     </div>
   );
