@@ -9,7 +9,8 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "prepare": "husky",
-    "sort:css": "postcss '**/*.css' --replace"
+    "sort:css": "postcss '**/*.css' --replace",
+    "test": "vitest"
   },
   "dependencies": {
     "chart.js": "^4.4.3",
@@ -23,6 +24,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.7.0",
+    "@testing-library/jest-dom": "^6.4.6",
+    "@testing-library/react": "^16.0.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
@@ -40,13 +43,15 @@
     "eslint-plugin-react-refresh": "^0.4.7",
     "globals": "^15.8.0",
     "husky": "^9.0.11",
+    "jsdom": "^24.1.1",
     "lint-staged": "^15.2.7",
     "postcss": "^8.4.39",
     "postcss-cli": "^11.0.0",
     "postcss-import": "^14.1.0",
     "postcss-sorting": "^8.0.2",
     "prettier": "3.3.3",
-    "vite": "^5.3.1"
+    "vite": "^5.3.1",
+    "vitest": "^2.0.3"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
