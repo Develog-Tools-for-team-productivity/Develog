@@ -87,7 +87,7 @@ const SignUpForm = () => {
     };
 
     try {
-      const response = await fetch('http://localhost:5001/api/register', {
+      const response = await fetch('http://localhost:5001/api/registerUser', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
