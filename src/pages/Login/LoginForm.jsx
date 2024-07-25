@@ -41,7 +41,7 @@ const LoginForm = () => {
         const data = await response.json();
         localStorage.setItem('token', data.token);
         setIsLoggedIn(true);
-        navigate('/dashboard');
+        navigate('/');
       } else {
         const errorData = await response.json();
         console.error('Error logging in:', errorData);

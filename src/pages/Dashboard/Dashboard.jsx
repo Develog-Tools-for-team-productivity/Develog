@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import Header from '../../components/header/Header';
 import TeamViewHeader from '../../components/header/TeamViewHeader';
 import StateCard from '../../components/stateCard/StateCard';
@@ -7,47 +8,40 @@ import DoraMetrics from '../../components/dorametrics/DoraMetrics';
 import styles from '../../components/stateCard/stateCard.module.css';
 
 const Dashboard = () => {
-  const stats = [
-    {
-      icon: 'gitCommit',
-      value: 110,
-      label: 'Git Commit',
-    },
-    {
-      icon: 'cycleTime',
-      value: '12d 1h',
-      label: 'Cycle Time',
-    },
-    {
-      icon: 'gitContributors',
-      value: 4,
-      label: 'Git Contributors',
-    },
-    {
-      icon: 'investmentProfile',
-      value: 4,
-      label: 'Investment Profile',
-    },
-  ];
+  const [stats, setStats] = useState([]);
+  const [extendedStats, setExtendedStats] = useState({});
 
-  const extendedStats = {
-    cycleTime: {
-      items: [
-        { value: '16 hour', label: 'Coding' },
-        { value: '2 days', label: 'PickUp' },
-        { value: '7 hour', label: 'Review' },
-        { value: '90 min', label: 'Deploy' },
-      ],
-    },
-    investmentProfile: {
-      items: [
-        { value: 18, label: 'Functional Stories' },
-        { value: 32, label: 'Non-Functional Stories' },
-        { value: 50, label: 'Bugs' },
-        { value: 12, label: 'Others' },
-      ],
-    },
-  };
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const token = localStorage.getItem('token');
+
+      if (!token) {
+        window.location.href = '/login';
+        return;
+      }
+
+      try {
+        const response = await fetch('http://localhost:5001/api/user-data', {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('데이터 가져오기 실패');
+        }
+
+        const data = await response.json();
+        setStats(data.stats);
+        setExtendedStats(data.extendedStats);
+      } catch (error) {
+        console.error('데이터 가져오기 중 오류 발생:', error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   return (
     <>

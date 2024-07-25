@@ -30,7 +30,9 @@ function App() {
           </main>
         </div>
       ) : (
-        <Login />
+        <Routes>
+          <Route path="*" element={<Login />} />
+        </Routes>
       )}
     </Router>
   );
