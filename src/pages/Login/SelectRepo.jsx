@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useAtom } from 'jotai';
+import { isLoggedInAtom } from '../../stores/useStore';
 
 import Button from '../../components/button/Button';
 import MultiSelectBox from '../../components/select/MultiSelectBox';
@@ -10,16 +12,19 @@ import styles from './login.module.css';
 import illustImg from '../../assets/img/illustImg.png';
 
 export const SelectRepo = () => {
+  const location = useLocation();
   const [repositories, setRepositories] = useState([]);
   const [selectedRepositories, setSelectedRepositories] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const [showModal, setShowModal] = useState(false);
-
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchRepositories = async () => {
       const token = localStorage.getItem('token');
+
       if (!token) {
+        console.error('토큰을 찾을 수 없습니다.');
         navigate('/login');
         return;
       }
@@ -49,7 +54,7 @@ export const SelectRepo = () => {
     };
 
     fetchRepositories();
-  }, [navigate]);
+  }, [location, navigate]);
 
   const handleRepositorySubmit = async () => {
     const token = localStorage.getItem('token');
@@ -80,6 +85,7 @@ export const SelectRepo = () => {
 
   const handleCloseModal = () => {
     setShowModal(false);
+    setIsLoggedIn(true);
     navigate('/dashboard');
   };
 
@@ -106,7 +112,7 @@ export const SelectRepo = () => {
             onChange={setSelectedRepositories}
           />
           <Button
-            text="Select Repository"
+            text="Sign up"
             type="submit"
             onClick={handleRepositorySubmit}
           />

@@ -1,16 +1,16 @@
-import { useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Route,
   Routes,
   Navigate,
 } from 'react-router-dom';
+import { useEffect } from 'react';
 import { useAtom } from 'jotai';
 import { isLoggedInAtom } from './stores/useStore';
 
 import Login from './pages/login/Login';
+import Container from './pages/container/Container';
 import SelectRepo from './pages/login/SelectRepo';
-import Sidebar from './components/sidebar/Sidebar';
 import Dashboard from './pages/dashboard/Dashboard';
 import CycleTime from './pages/cycleTime/CycleTime';
 import ProjectDeliveryTracker from './pages/projectDeliveryTracker/ProjectDeliveryTracker';
@@ -24,33 +24,45 @@ function App() {
   useEffect(() => {
     if (token) {
       setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
     }
   }, [token, setIsLoggedIn]);
 
   return (
     <Router>
-      {isLoggedIn ? (
-        <div className="container">
-          <Sidebar />
-          <main className="main-content">
-            <Routes>
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/cycle-time" element={<CycleTime />} />
-              <Route
-                path="/project-delivery-tracker"
-                element={<ProjectDeliveryTracker />}
-              />
-              <Route path="*" element={<Navigate to="/dashboard" replace />} />
-            </Routes>
-          </main>
-        </div>
-      ) : (
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/select-repo" element={<SelectRepo />} />
-          <Route path="*" element={<Navigate to="/login" replace />} />
-        </Routes>
-      )}
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/select-repo" element={<SelectRepo />} />
+        <Route
+          path="/dashboard"
+          element={
+            <Container>
+              <Dashboard />
+            </Container>
+          }
+        />
+        <Route
+          path="/cycle-time"
+          element={
+            <Container>
+              <CycleTime />
+            </Container>
+          }
+        />
+        <Route
+          path="/project-delivery-tracker"
+          element={
+            <Container>
+              <ProjectDeliveryTracker />
+            </Container>
+          }
+        />
+        <Route
+          path="/"
+          element={<Navigate to={isLoggedIn ? '/dashboard' : '/login'} />}
+        />
+      </Routes>
     </Router>
   );
 }
