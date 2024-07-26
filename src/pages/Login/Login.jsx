@@ -1,16 +1,10 @@
-import { useAtom } from 'jotai';
-import { showSignUpAtom } from '../../stores/useStore';
-
 import AuthHeader from './AuthHeader';
 import LoginForm from './LoginForm';
-import SignUpForm from './SignUpForm';
 
 import styles from './login.module.css';
 import illustImg from '../../assets/img/illustImg.png';
 
 const Login = () => {
-  const [showSignUp] = useAtom(showSignUpAtom);
-
   return (
     <section className={styles.loginSection}>
       <div className={styles.leftLayout}>
@@ -25,8 +19,8 @@ const Login = () => {
         </p>
       </div>
       <div className={styles.rightLayout}>
-        <AuthHeader isSignUpPage={showSignUp} />
-        {showSignUp ? <SignUpForm /> : <LoginForm />}
+        <AuthHeader />
+        <LoginForm />
       </div>
     </section>
   );

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from '../../components/header/Header';
 import TeamViewHeader from '../../components/header/TeamViewHeader';
 import StateCard from '../../components/stateCard/StateCard';
@@ -14,11 +14,6 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       const token = localStorage.getItem('token');
-
-      if (!token) {
-        window.location.href = '/login';
-        return;
-      }
 
       try {
         const response = await fetch('http://localhost:5001/api/user-data', {
