@@ -1,4 +1,10 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { useEffect } from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from 'react-router-dom';
 import { useAtom } from 'jotai';
 import { isLoggedInAtom } from './stores/useStore';
 
@@ -15,11 +21,11 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const token = localStorage.getItem('token');
 
-  if (token) {
-    setIsLoggedIn(true);
-  } else {
-    setIsLoggedIn(false);
-  }
+  useEffect(() => {
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, [token, setIsLoggedIn]);
 
   return (
     <Router>
@@ -34,6 +40,7 @@ function App() {
                 path="/project-delivery-tracker"
                 element={<ProjectDeliveryTracker />}
               />
+              <Route path="*" element={<Navigate to="/dashboard" replace />} />
             </Routes>
           </main>
         </div>
@@ -41,6 +48,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/select-repo" element={<SelectRepo />} />
+          <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
       )}
     </Router>
