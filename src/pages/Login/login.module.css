@@ -94,3 +94,19 @@
 .gitHubInput > *:not(:last-child) {
   margin-bottom: 10px;
 }
+
+.selectedRepositories {
+  display: flex;
+  font-size: 12px;
+}
+
+.selectedRepositories p {
+  font-size: 13px;
+  line-height: 15px;
+}
+
+.selectedRepositories span {
+  font-weight: 900;
+  margin: 0 5px;
+  color: #647ae4;
+}

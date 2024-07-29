@@ -7,6 +7,7 @@ import Button from '../../components/button/Button';
 import MultiSelectBox from '../../components/select/MultiSelectBox';
 import Modal from '../../components/modal/Modal';
 import AuthHeader from './AuthHeader';
+import Loading from '../../components/Loading/loading';
 
 import styles from './login.module.css';
 import illustImg from '../../assets/img/illustImg.png';
@@ -17,6 +18,7 @@ export const SelectRepo = () => {
   const [selectedRepositories, setSelectedRepositories] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const [showModal, setShowModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -47,7 +49,36 @@ export const SelectRepo = () => {
         }
 
         const data = await response.json();
-        setRepositories(data.map(repo => ({ id: repo.id, name: repo.name })));
+        const userResponse = await fetch(
+          'http://localhost:5001/api/user-data',
+          {
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+
+        if (!userResponse.ok) {
+          const errorData = await userResponse.json();
+          throw new Error(`Failed to fetch user data: ${errorData.message}`);
+        }
+
+        const userData = await userResponse.json();
+        const userSelectedRepositories = userData.selectedRepositories;
+
+        setSelectedRepositories(userSelectedRepositories);
+        const remainingRepositories = data.filter(
+          repo =>
+            !userSelectedRepositories.some(
+              selectedRepo => selectedRepo.id === repo.id
+            )
+        );
+
+        setRepositories(
+          remainingRepositories.map(repo => ({ id: repo.id, name: repo.name }))
+        );
       } catch (error) {
         console.error('레포지토리를 가져오지 못했습니다:', error);
       }
@@ -58,6 +89,7 @@ export const SelectRepo = () => {
 
   const handleRepositorySubmit = async () => {
     const token = localStorage.getItem('token');
+    setIsLoading(true);
 
     try {
       const response = await fetch(
@@ -77,6 +109,7 @@ export const SelectRepo = () => {
       }
 
       const data = await response.json();
+      setIsLoading(false);
       setShowModal(true);
     } catch (error) {
       console.error('레포지토리 업데이트 중 오류 발생:', error);
@@ -111,6 +144,15 @@ export const SelectRepo = () => {
             selectedValues={selectedRepositories}
             onChange={setSelectedRepositories}
           />
+          <div className={styles.selectedRepositories}>
+            <p>
+              현재 저장되어있는 레포지토리는
+              {selectedRepositories.map(repo => (
+                <span key={repo.id}>{repo.name}</span>
+              ))}
+              입니다.
+            </p>
+          </div>
           <Button
             text="Sign up"
             type="submit"
@@ -119,6 +161,7 @@ export const SelectRepo = () => {
           {showModal && <Modal onClose={handleCloseModal} />}
         </div>
       </div>
+      {isLoading && <Loading />}
     </section>
   );
 };
