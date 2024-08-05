@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAtom } from 'jotai';
 import { isLoggedInAtom } from '../../stores/useStore';
+import { fetchData } from '../../utils/api';
 
 import Button from '../../components/button/Button';
 import MultiSelectBox from '../../components/select/MultiSelectBox';
@@ -14,62 +15,38 @@ import illustImg from '../../assets/img/illustImg.png';
 
 export const SelectRepo = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+
   const [repositories, setRepositories] = useState([]);
   const [selectedRepositories, setSelectedRepositories] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchRepositories = async () => {
-      const token = localStorage.getItem('token');
-
-      if (!token) {
-        console.error('토큰을 찾을 수 없습니다.');
-        navigate('/login');
-        return;
-      }
-
       try {
-        const response = await fetch(
-          'http://localhost:5001/api/fetch-repositories',
-          {
-            method: 'GET',
-            headers: {
-              Authorization: `Bearer ${token}`,
-              'Content-Type': 'application/json',
-            },
-          }
-        );
+        const [repositoriesData, userData] = await Promise.all([
+          fetchData(
+            'http://localhost:5001/api/fetch-repositories',
+            'GET',
+            null,
+            '레포지토리를 불러오는데 실패하였습니다'
+          ),
+          fetchData(
+            'http://localhost:5001/api/user-data',
+            'GET',
+            null,
+            '사용자 데이터를 가져오는데 실패하였습니다'
+          ),
+        ]);
 
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(`Failed to fetch repositories: ${errorData.message}`);
-        }
+        if (!repositoriesData || !userData) return;
 
-        const data = await response.json();
-        const userResponse = await fetch(
-          'http://localhost:5001/api/user-data',
-          {
-            method: 'GET',
-            headers: {
-              Authorization: `Bearer ${token}`,
-              'Content-Type': 'application/json',
-            },
-          }
-        );
-
-        if (!userResponse.ok) {
-          const errorData = await userResponse.json();
-          throw new Error(`Failed to fetch user data: ${errorData.message}`);
-        }
-
-        const userData = await userResponse.json();
         const userSelectedRepositories = userData.selectedRepositories;
-
         setSelectedRepositories(userSelectedRepositories);
-        const remainingRepositories = data.filter(
+
+        const remainingRepositories = repositoriesData.filter(
           repo =>
             !userSelectedRepositories.some(
               selectedRepo => selectedRepo.id === repo.id
@@ -80,7 +57,7 @@ export const SelectRepo = () => {
           remainingRepositories.map(repo => ({ id: repo.id, name: repo.name }))
         );
       } catch (error) {
-        console.error('레포지토리를 가져오지 못했습니다:', error);
+        console.error('데이터를 가져오지 못했습니다:', error);
       }
     };
 
@@ -88,31 +65,21 @@ export const SelectRepo = () => {
   }, [location, navigate]);
 
   const handleRepositorySubmit = async () => {
-    const token = localStorage.getItem('token');
     setIsLoading(true);
 
     try {
-      const response = await fetch(
+      const data = await fetchData(
         'http://localhost:5001/api/saveRepositoriesInfo',
-        {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ selectedRepositories }),
-        }
+        'POST',
+        { selectedRepositories },
+        '레포지토리 업데이트 중 오류 발생'
       );
 
-      if (!response.ok) {
-        throw new Error('Server responded with an error');
-      }
-
-      const data = await response.json();
       setIsLoading(false);
       setShowModal(true);
     } catch (error) {
       console.error('레포지토리 업데이트 중 오류 발생:', error);
+      setIsLoading(false);
     }
   };
 
@@ -154,7 +121,7 @@ export const SelectRepo = () => {
             </p>
           </div>
           <Button
-            text="Sign up"
+            text="레포지토리 선택완료"
             type="submit"
             onClick={handleRepositorySubmit}
           />
