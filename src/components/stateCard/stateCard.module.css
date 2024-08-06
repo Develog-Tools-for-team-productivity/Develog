@@ -22,9 +22,10 @@
 }
 
 .extendedStateCard .item {
+  position: relative;
   display: flex;
   flex-direction: column;
-  width: 146px;
+  width: 90px;
 }
 
 .extendedStateCard .item .label {
@@ -33,21 +34,34 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   margin-bottom: 10px;
+  width: 80px;
 }
 
-.extendedStateCard .value {
-  position: relative;
-  font-size: 20px;
-  font-weight: bold;
-  padding-bottom: 12px;
+.extendedStateCard .mark {
+  position: absolute;
+  top: 2px;
+  left: 70px;
+  border-radius: 5px;
+  display: block;
+  width: 8px;
+  height: 8px;
+  background-color: #ddd;
 }
 
-.extendedStateCard .item .label {
-  overflow: hidden;
-  font-size: 12px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  margin-bottom: 10px;
+.extendedStateCard .mark.blue {
+  background-color: #647ae4;
+}
+
+.extendedStateCard .mark.red {
+  background-color: #e7595a;
+}
+
+.extendedStateCard .mark.yellow {
+  background-color: #f28f45;
+}
+
+.extendedStateCard .mark.green {
+  background-color: #5baf69;
 }
 
 .extendedStateCard .value {
