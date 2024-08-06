@@ -1,4 +1,9 @@
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { useAtom } from 'jotai';
+import { dateRangeAtom } from '../../stores/useStore';
+import { fetchDateData } from '../../utils/api';
+
 import Header from '../../components/header/Header';
 import TeamViewHeader from '../../components/header/TeamViewHeader';
 import StateCard from '../../components/stateCard/StateCard';
@@ -10,39 +15,48 @@ import styles from '../../components/stateCard/stateCard.module.css';
 const Dashboard = () => {
   const [stats, setStats] = useState([]);
   const [extendedStats, setExtendedStats] = useState({});
+  const [dateRange, setDateRange] = useAtom(dateRangeAtom);
+  const location = useLocation();
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      const token = localStorage.getItem('token');
+    const endDate = new Date();
+    const startDate = new Date(endDate);
+    startDate.setDate(startDate.getDate() - 10);
 
-      try {
-        const response = await fetch('http://localhost:5001/api/user-data', {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+    setDateRange({
+      startDate: startDate.toISOString().split('T')[0],
+      endDate: endDate.toISOString().split('T')[0],
+    });
+  }, [location]);
 
-        if (!response.ok) {
-          throw new Error('데이터 가져오기 실패');
-        }
+  const fetchUserData = async (startDate, endDate) => {
+    try {
+      const data = await fetchDateData(startDate, endDate);
+      setStats(data.stats);
+      setExtendedStats(data.extendedStats);
+    } catch (error) {
+      console.error('데이터 가져오기 중 오류 발생:', error);
+    }
+  };
 
-        const data = await response.json();
-        setStats(data.stats);
-        setExtendedStats(data.extendedStats);
-      } catch (error) {
-        console.error('데이터 가져오기 중 오류 발생:', error);
-      }
-    };
+  const handleDateRangeChange = (startDate, endDate) => {
+    fetchUserData(startDate, endDate);
+  };
 
-    fetchUserData();
-  }, []);
+  useEffect(() => {
+    if (dateRange.startDate && dateRange.endDate) {
+      fetchUserData(dateRange.startDate, dateRange.endDate);
+    }
+  }, [dateRange]);
 
   return (
     <>
       <Header headerText="Dashboard" />
       <div className={styles.teamViewContainer}>
-        <TeamViewHeader dateSelect={true} />
+        <TeamViewHeader
+          dateSelect={true}
+          onDateRangeChange={handleDateRangeChange}
+        />
         <div className={styles.insight}>
           {stats.map((stat, index) => (
             <StateCard
@@ -56,7 +70,7 @@ const Dashboard = () => {
         </div>
       </div>
       <MainBoard boardTitle="DORA Metrics">
-        <DoraMetrics />
+        <DoraMetrics dateRange={dateRange} />
       </MainBoard>
     </>
   );
