@@ -25,3 +25,12 @@ export const fetchData = async (url, method, body, errorMessage) => {
 
   return response.json();
 };
+
+export const fetchDateData = async (startDate, endDate) => {
+  return fetchData(
+    `http://localhost:5001/api/user-data?startDate=${startDate}&endDate=${endDate}`,
+    'GET',
+    null,
+    '데이터 가져오기 실패'
+  );
+};

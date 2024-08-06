@@ -1,25 +1,22 @@
-import { useState, useRef } from 'react';
+import { useDateRange } from '../../utils/useDateRange';
 import styles from './select.module.css';
 
-function DateRangePicker() {
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
-  const [showPicker, setShowPicker] = useState(false);
-  const dateInputRef = useRef(null);
+export default function DateRangePicker({ onDateRangeChange }) {
+  const { dateRange, setDateRange, showPicker, setShowPicker } =
+    useDateRange(10);
 
   const handleInputChange = event => {
     const value = event.target.value;
     const [start, end] = value.split(' - ');
-    setStartDate(start);
-    setEndDate(end);
+    setDateRange({ startDate: start, endDate: end });
   };
 
   const handleStartDateChange = event => {
-    setStartDate(event.target.value);
+    setDateRange(prev => ({ ...prev, startDate: event.target.value }));
   };
 
   const handleEndDateChange = event => {
-    setEndDate(event.target.value);
+    setDateRange(prev => ({ ...prev, endDate: event.target.value }));
   };
 
   const handlePickerClick = () => {
@@ -28,14 +25,14 @@ function DateRangePicker() {
 
   const handleApplyClick = () => {
     setShowPicker(false);
-    dateInputRef.current.value = `${startDate} - ${endDate}`;
+    onDateRangeChange(dateRange.startDate, dateRange.endDate);
   };
 
   return (
     <div className={styles.dateRangePicker}>
       <input
         type="text"
-        ref={dateInputRef}
+        value={`${dateRange.startDate} - ${dateRange.endDate}`}
         onClick={handlePickerClick}
         onChange={handleInputChange}
         className={styles.dateInput}
@@ -48,7 +45,7 @@ function DateRangePicker() {
             <input
               type="date"
               id="start-date"
-              value={startDate}
+              value={dateRange.startDate}
               onChange={handleStartDateChange}
               className={styles.dateInput}
             />
@@ -58,7 +55,7 @@ function DateRangePicker() {
             <input
               type="date"
               id="end-date"
-              value={endDate}
+              value={dateRange.endDate}
               onChange={handleEndDateChange}
               className={styles.dateInput}
             />
@@ -71,5 +68,3 @@ function DateRangePicker() {
     </div>
   );
 }
-
-export default DateRangePicker;
