@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAtom } from 'jotai';
-import { isLoggedInAtom } from '../../stores/useStore';
+import { isLoggedInAtom, userDataAtom } from '../../stores/useStore';
 import { fetchData } from '../../utils/api';
 
 import Button from '../../components/button/Button';
@@ -20,25 +20,33 @@ export const SelectedRepo = () => {
   const [repositories, setRepositories] = useState([]);
   const [selectedRepositories, setSelectedRepositories] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
+  const [userData, setUserData] = useAtom(userDataAtom);
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchRepositories = async () => {
       try {
-        const repositoriesData = await Promise.all([
+        const [repositoriesData, userData] = await Promise.all([
           fetchData(
             'http://localhost:5001/api/fetch-repositories',
             'GET',
             null,
             '레포지토리를 불러오는데 실패하였습니다'
           ),
+          fetchData(
+            'http://localhost:5001/api/user-data',
+            'GET',
+            null,
+            '사용자 데이터를 가져오는데 실패하였습니다'
+          ),
         ]);
 
-        if (!repositoriesData) return;
+        if (!repositoriesData || !userData) return;
 
         const userSelectedRepositories = userData.selectedRepositories;
         setSelectedRepositories(userSelectedRepositories);
+        setUserData(userData.userInfo);
 
         const remainingRepositories = repositoriesData.filter(
           repo =>
@@ -56,7 +64,7 @@ export const SelectedRepo = () => {
     };
 
     fetchRepositories();
-  }, [location, navigate]);
+  }, [location, navigate, setUserData]);
 
   const handleRepositorySubmit = async () => {
     setIsLoading(true);
