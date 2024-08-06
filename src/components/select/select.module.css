@@ -87,7 +87,7 @@
   right: 4%;
   width: 10px;
   height: 8px;
-  background: url('../img/selectBox.png') no-repeat 0 0;
+  background: url('../../assets/img/selectBox.png') no-repeat 0 0;
 }
 
 .defaultOption {
@@ -116,4 +116,44 @@
 
 .option:hover {
   background-color: #f1f2f5;
+}
+
+.selectBox.boardSelect {
+  position: relative;
+}
+
+.selectBox.boardSelect:after {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+  display: block;
+  width: 20px;
+  height: 20px;
+  background: url('../../assets/img/iconSprites.png') no-repeat -110px -308px;
+  content: '';
+}
+
+.boardSelect {
+  width: 265px;
+  height: 40px;
+}
+
+.boardSelect .selectBox {
+  padding: 10px;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  font-size: 14px;
+  cursor: pointer;
+  background-color: #eeedf1;
+  height: 40px;
+}
+
+.boardSelect .selectBox span {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  padding-right: 20px;
 }

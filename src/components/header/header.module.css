@@ -1,17 +1,24 @@
 .teamInfo {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 10px;
+  padding-right: 20px;
 }
 
 .teamInfo span {
   width: 30px;
+  height: 30px;
   color: #fff;
   border-radius: 10px;
   font-size: 12px;
   line-height: 30px;
   text-align: center;
   background-color: #647ae4;
+  overflow: hidden;
+}
+
+.teamInfo .userImg {
+  width: 100%;
 }
 
 .teamInfo p {
