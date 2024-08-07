@@ -9,7 +9,7 @@ const Header = ({ headerText }) => {
     const getUserData = async () => {
       try {
         const response = await fetchData(
-          'http://localhost:5001/api/user-data',
+          `${import.meta.env.VITE_API_URL}/user-data`,
           'GET',
           null,
           '사용자 데이터를 가져오는데 실패하였습니다'

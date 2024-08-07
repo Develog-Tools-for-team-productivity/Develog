@@ -31,7 +31,7 @@ const DoraMetrics = ({ dateRange }) => {
     setIsLoading(true);
     try {
       const response = await fetch(
-        `http://localhost:5001/api/dora-metrics?startDate=${dateRange.startDate}&endDate=${dateRange.endDate}`,
+        `${import.meta.env.VITE_API_URL}/dora-metrics?startDate=${dateRange.startDate}&endDate=${dateRange.endDate}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,

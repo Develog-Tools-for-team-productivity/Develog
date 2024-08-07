@@ -11,7 +11,7 @@ export const useFetchCycleTimeData = () => {
     try {
       const token = localStorage.getItem('token');
       const response = await fetch(
-        `http://localhost:5001/api/user-data?startDate=${startDate}&endDate=${endDate}`,
+        `${import.meta.env.VITE_API_URL}/user-data?startDate=${startDate}&endDate=${endDate}`,
         {
           method: 'GET',
           headers: {

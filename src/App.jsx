@@ -24,13 +24,16 @@ function App() {
 
   const validateToken = async token => {
     try {
-      const response = await fetch('http://localhost:5001/api/validate-token', {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/validate-token`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
 
       const data = await response.json();
       return data.isValid;

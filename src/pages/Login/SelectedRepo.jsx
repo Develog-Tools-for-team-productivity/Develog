@@ -29,13 +29,13 @@ export const SelectedRepo = () => {
       try {
         const [repositoriesData, userData] = await Promise.all([
           fetchData(
-            'http://localhost:5001/api/fetch-repositories',
+            `${import.meta.env.VITE_API_URL}/fetch-repositories`,
             'GET',
             null,
             '레포지토리를 불러오는데 실패하였습니다'
           ),
           fetchData(
-            'http://localhost:5001/api/user-data',
+            `${import.meta.env.VITE_API_URL}/user-data`,
             'GET',
             null,
             '사용자 데이터를 가져오는데 실패하였습니다'
@@ -71,7 +71,7 @@ export const SelectedRepo = () => {
 
     try {
       const data = await fetchData(
-        'http://localhost:5001/api/saveRepositoriesInfo',
+        `${import.meta.env.VITE_API_URL}/saveRepositoriesInfo`,
         'POST',
         { selectedRepositories },
         '레포지토리 업데이트 중 오류 발생'
