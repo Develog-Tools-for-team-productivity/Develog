@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
 import Header from '../../components/header/Header';
 import TeamViewHeader from '../../components/header/TeamViewHeader';
 import StateCard from '../../components/stateCard/StateCard';
@@ -10,175 +11,157 @@ import styles from '../../components/stateCard/stateCard.module.css';
 
 const ProjectDeliveryTracker = () => {
   const [isDefaultView, setIsDefaultView] = useState(true);
+  const [projectsData, setProjectsData] = useState([]);
+  const [projectsTotal, setProjectsTotal] = useState({
+    totalProjects: 0,
+    totalPeople: 0,
+    labelSummary: [],
+  });
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [sprint, setSprint] = useState([]);
 
-  const stats = [
-    {
-      icon: 'projects',
-      value: '4',
-      label: 'Project',
-    },
-    {
-      icon: 'people',
-      value: '22',
+  useEffect(() => {
+    fetchProjectData();
+  }, []);
+
+  const fetchProjectData = async () => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/projects`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      if (!response.ok)
+        throw new Error('프로젝트 데이터 가져오기에 실패했습니다.');
+      const data = await response.json();
+      setProjectsData(data.projectDeliveryData || []);
+      setProjectsTotal(
+        data.summaryData || {
+          totalProjects: 0,
+          totalPeople: 0,
+          labelSummary: [],
+        }
+      );
+      setSprint(data.iterationLabelRations);
+    } catch (error) {
+      console.error('프로젝트 데이터 받는 중 오류가 생겼습니다', error);
+    }
+  };
+
+  if (!projectsData || projectsData.length === 0) {
+    return <div>Loading...</div>;
+  }
+
+  const cycleTimeData = projectsData.map(project => ({
+    projects: project.projectName,
+    activePeople: {
+      icon: 'activePeople',
+      value: project.teamSize,
       label: 'People',
     },
+    investmentProfile: project.overallInvestmentProfile.items,
+    delivery: {
+      icon: 'delivery',
+      value: `${project.planningAccuracy ? project.planningAccuracy.overall : 0}%`,
+      label: 'Planning Accuracy',
+    },
+  }));
+
+  const createSprintData = sprintData => {
+    if (!sprintData || !Array.isArray(sprintData)) {
+      return {};
+    }
+
+    const sprintMap = {};
+    sprintData.forEach((sprint, index) => {
+      sprintMap[`sprint${index + 1}`] = sprint.labelRatios.map(labelRatio => ({
+        label: labelRatio.label,
+        value: parseFloat(labelRatio.ratio),
+      }));
+    });
+    return sprintMap;
+  };
+
+  const projectData = projectsData.map(project => ({
+    peopleEffort: {
+      value: Math.ceil((project.summaryData.activePeople / 3) * 100),
+      mostActive: project.topContributors
+        ? project.topContributors.map(contributor => ({
+            name: contributor.name,
+            active: contributor.count,
+          }))
+        : [],
+    },
+    investmentProfile: {
+      total: project.overallInvestmentProfile.items,
+      sprints: sprint ? createSprintData(sprint) : {},
+    },
+    projectDelivery: project.projectDeliveryMetrics
+      ? {
+          total: [
+            { label: 'Added', value: 6 },
+            { label: 'Complete', value: 12 },
+            { label: 'Carryover', value: 0 },
+          ],
+          sprints: {
+            sprint1: [
+              { label: 'Added', value: 2 },
+              { label: 'Complete', value: 6 },
+              { label: 'Carryover', value: 0 },
+            ],
+            sprint2: [
+              { label: 'Added', value: 2 },
+              { label: 'Complete', value: 3 },
+              { label: 'Carryover', value: 0 },
+            ],
+            sprint3: [
+              { label: 'Added', value: 2 },
+              { label: 'Complete', value: 2 },
+              { label: 'Carryover', value: 0 },
+            ],
+            sprint4: [
+              { label: 'Added', value: 0 },
+              { label: 'Complete', value: 1 },
+              { label: 'Carryover', value: 0 },
+            ],
+          },
+        }
+      : { total: [], sprints: {} },
+    planningAccuracy: {
+      total: project.planningAccuracy ? project.planningAccuracy.overall : 0,
+      sprints: {
+        sprint1: { sprintName: 'sprint1', value: 50 },
+        sprint2: { sprintName: 'sprint2', value: 20 },
+        sprint3: { sprintName: 'sprint3', value: 5 },
+        sprint4: { sprintName: 'sprint4', value: 5 },
+      },
+    },
+  }));
+
+  const stats = [
+    { icon: 'projects', value: projectsTotal.totalProjects, label: 'Project' },
+    { icon: 'people', value: projectsTotal.totalPeople, label: 'People' },
   ];
 
   const extendedStats = {
-    investmentProfile: {
-      items: [
-        { value: 18, label: 'Functional Stories' },
-        { value: 32, label: 'Non-Functional Stories' },
-        { value: 50, label: 'Bugs' },
-        { value: 12, label: 'Others' },
-      ],
-    },
+    investmentProfile: { items: projectsTotal.labelSummary },
   };
 
-  const headers = [
-    'Projects',
-    'Active people',
-    'Investment Profile',
-    'Delivery',
-  ];
+  const headers = ['Projects', '활동 인원', '프로젝트 주요 작업', '달성율'];
 
   const projectHeaders = {
-    projectDate: '2024. 04. 15 - 2024. 06. 10',
+    projectDate: '2024. 07. 14 - 2024. 07. 30',
     blank1: '\u00A0',
     blank2: '\u00A0',
-    sprint1: { sprintName: 'sprint1', date: '04. 15 - 04. 30', value: 20 },
-    sprint2: { sprintName: 'sprint2', date: '04. 15 - 04. 30', value: 60 },
-    sprint3: { sprintName: 'sprint3', date: '04. 15 - 04. 30', value: 90 },
-    sprint4: { sprintName: 'sprint4', date: '04. 15 - 04. 30', value: 40 },
+    sprint1: { sprintName: 'sprint1', date: '07. 14 - 07. 17', value: 34 },
+    sprint2: { sprintName: 'sprint2', date: '07. 18 - 07. 21', value: 34 },
+    sprint3: { sprintName: 'sprint3', date: '07. 22 - 07. 25', value: 34 },
+    sprint4: { sprintName: 'sprint4', date: '07. 26 - 07. 30', value: 34 },
   };
 
-  const cycleTimeData = [
-    {
-      projects: 'Project XYZ',
-      activePeople: {
-        icon: 'activePeople',
-        value: '22',
-        label: 'People',
-      },
-      investmentProfile: [
-        { label: 'Functional Stories', value: 55 },
-        { label: 'Non-Functional Stories', value: 25 },
-        { label: 'Bugs', value: 15 },
-        { label: 'Others', value: 5 },
-      ],
-      delivery: {
-        icon: 'delivery',
-        value: '62%',
-        label: 'Planning Accuracy',
-      },
-    },
-    {
-      projects: 'Project XYZ',
-      activePeople: {
-        icon: 'activePeople',
-        value: '22',
-        label: 'People',
-      },
-      investmentProfile: [
-        { label: 'Functional Stories', value: 55 },
-        { label: 'Non-Functional Stories', value: 25 },
-        { label: 'Bugs', value: 15 },
-        { label: 'Others', value: 5 },
-      ],
-      delivery: {
-        icon: 'delivery',
-        value: '62%',
-        label: 'Planning Accuracy',
-      },
-    },
-  ];
-
-  const projectData = {
-    peopleEffort: {
-      value: 64,
-      mostActive: [
-        {
-          name: 'Sarah Scott',
-          active: 120,
-        },
-        {
-          name: 'Sarah Scott',
-          active: 120,
-        },
-      ],
-    },
-    investmentProfile: {
-      total: [
-        { label: 'Functional Stories', value: 55 },
-        { label: 'Non-Functional Stories', value: 25 },
-        { label: 'Bugs', value: 15 },
-        { label: 'Others', value: 5 },
-      ],
-      sprints: {
-        sprint1: [
-          { label: 'Functional Stories', value: 15 },
-          { label: 'Non-Functional Stories', value: 25 },
-          { label: 'Bugs', value: 35 },
-          { label: 'Others', value: 25 },
-        ],
-        sprint2: [
-          { label: 'Functional Stories', value: 25 },
-          { label: 'Non-Functional Stories', value: 25 },
-          { label: 'Bugs', value: 35 },
-          { label: 'Others', value: 15 },
-        ],
-        sprint3: [
-          { label: 'Functional Stories', value: 35 },
-          { label: 'Non-Functional Stories', value: 25 },
-          { label: 'Bugs', value: 15 },
-          { label: 'Others', value: 25 },
-        ],
-        sprint4: [
-          { label: 'Functional Stories', value: 25 },
-          { label: 'Non-Functional Stories', value: 45 },
-          { label: 'Bugs', value: 15 },
-          { label: 'Others', value: 15 },
-        ],
-      },
-    },
-    projectDelivery: {
-      total: [
-        { label: 'Added', value: 6 },
-        { label: 'Complete', value: 9 },
-        { label: 'Carryover', value: 2 },
-      ],
-      sprints: {
-        sprint1: [
-          { label: 'Added', value: 6 },
-          { label: 'Complete', value: 15 },
-          { label: 'Carryover', value: 2 },
-        ],
-        sprint2: [
-          { label: 'Added', value: 6 },
-          { label: 'Complete', value: 9 },
-          { label: 'Carryover', value: 19 },
-        ],
-        sprint3: [
-          { label: 'Added', value: 14 },
-          { label: 'Complete', value: 9 },
-          { label: 'Carryover', value: 2 },
-        ],
-        sprint4: [
-          { label: 'Added', value: 6 },
-          { label: 'Complete', value: 20 },
-          { label: 'Carryover', value: 2 },
-        ],
-      },
-    },
-    planningAccuracy: {
-      total: 62,
-      sprints: {
-        sprint1: { sprintName: 'sprint1', value: 20 },
-        sprint2: { sprintName: 'sprint2', value: 60 },
-        sprint3: { sprintName: 'sprint3', value: 90 },
-        sprint4: { sprintName: 'sprint4', value: 40 },
-      },
-    },
+  const handleProjectClick = projectIndex => {
+    setSelectedProject(projectData[projectIndex]);
+    setIsDefaultView(false);
   };
 
   return (
@@ -206,10 +189,12 @@ const ProjectDeliveryTracker = () => {
             headers={headers}
             data={cycleTimeData}
             page="ProjectDeliveryTracker"
-            setState={setIsDefaultView}
+            setState={handleProjectClick}
           />
         ) : (
-          <ProjectList headers={projectHeaders} data={projectData} />
+          selectedProject && (
+            <ProjectList headers={projectHeaders} data={selectedProject} />
+          )
         )}
       </MainBoard>
     </>
