@@ -1,6 +1,8 @@
-![title](https://github.com/user-attachments/assets/849a342b-8696-40cb-b1ce-db2d620381e1)
+![title](https://github.com/user-attachments/assets/96563f5c-0b4c-482b-ac38-6ce739fa66ee)
 
-![dora](https://github.com/user-attachments/assets/4519ca9a-2d75-43ad-8132-612dd3d1263a)
+
+![dora](https://github.com/user-attachments/assets/9cd3d39c-9880-4ebc-8542-51e1ad596f46)
+
 
 <b>Develog는 깃허브 기반 개발팀 생산성 향상 도구입니다.</b><br> 개발 과정의 비효율성을 데이터 분석으로 식별하고 개선하여 팀의 생산성과 프로젝트 관리 효율성을 높이기 위해 만들었습니다.
 
@@ -40,7 +42,7 @@
 때로는 어디서 시간을 허비하는지, 어떤 작업이 발목을 잡는지 알기 어려웠거든요. 그래서 '개발 내비게이션'을 만들어보기로 했습니다. 이 도구로 팀의 잠재력을 최대한 끌어올리고, 모두가 더 효율적으로, 더 즐겁게 일할 수 있기를 바라며 이 프로젝트를 만들게 되었습니다.
 
 # 📍 DORA Metrics란?
-<img width="694" alt="스크린샷 2024-08-08 오후 3 21 39" src="https://github.com/user-attachments/assets/2868c836-8d8c-4256-9687-57cba03575cd"><br>
+<img width="694" alt="스크린샷 2024-08-08 오후 3 21 39" src="https://github.com/user-attachments/assets/7bb56a98-bac5-4f78-adc2-5401602fb7a7"><br>
 DORA (DevOps Research and Assessment) Metrics는 소프트웨어 개발 및 운영 팀의 성과를 측정하는 주요 지표입니다.<br>
 Google Cloud의 DevOps Research and Assessment 팀이 개발한 메트릭스는 4가지 핵심 지표로 구성됩니다. <br>
 - 배포 빈도 (Deployment Frequency): 개발팀이 프로덕션 또는 엔드유저에게 얼마나 자주 새로운 코드를 릴리스하는지를 측정합니다. 높은 배포 빈도는 팀이 작은 단위로 자주 변경사항을 전달할 수 있음을 의미하며, 이는 더 빠른 피드백과 위험 감소로 이어집니다.
@@ -52,12 +54,12 @@ Google Cloud의 DevOps Research and Assessment 팀이 개발한 메트릭스는 
 <b>이 지표들을 통해 개발팀은 자신들의 소프트웨어 개발 및 운영 프로세스의 효율성과 안정성을 객관적으로 평가하고 개선할 수 있습니다.</b>
 # 📍 Features
 ### 💡 로그인 화면
-![Aug-08-2024 02-43-07](https://github.com/user-attachments/assets/6feac773-3277-493a-a01e-0a2e3fc4c781)
+![Aug-08-2024 02-43-07](https://github.com/user-attachments/assets/10a31f36-c706-487f-aca7-b540b55839b6)
 
 - 로그인 화면에서 github Oauth로 로그인하게 되면 사용자 계정의 레포지토리 데이터를 가지고와서 셀렉트박스로 보여줍니다.
 - 이미 DB에 저장되어있는 레포지토리는 셀렉트박스 아래에 텍스트로 나타내어 사용자에게 미리 알려줍니다.
 ### 💡 Dashboard 화면
-![Aug-08-2024 02-42-36](https://github.com/user-attachments/assets/6a548c49-d0e1-4f7f-9b6a-d25c2c545563)
+![Aug-08-2024 02-42-36](https://github.com/user-attachments/assets/d8bfccd7-5a0f-4fb5-bb44-9fee157694e1)
 
 - 페이지 상단의 TeamView를 통해 팀 프로젝트 전체의 상태를 볼 수 있습니다.
   - 날짜를 선택하여 날짜 범위의 데이터를 확인해 볼 수 있습니다.
@@ -68,7 +70,7 @@ Google Cloud의 DevOps Research and Assessment 팀이 개발한 메트릭스는 
   - 그래프의 색으로 현재 개발 상태를 시각화하여 한눈에 확인해 볼 수 있습니다. 
 
 ### 💡 CycleTime 화면
-![Aug-08-2024 02-49-43](https://github.com/user-attachments/assets/fe6cc0f5-9211-45a2-a712-364f0c5c2e02)
+![Aug-08-2024 02-49-43](https://github.com/user-attachments/assets/27ab5b34-8a6a-4be8-a683-a3f55e22b7bd)
 
 - 페이지 상단에서 팀의 총 개발 주기시간을 확인해 볼 수 있습니다.
   - 날짜를 선택하여 해당 날짜 범위의 개발 주기시간과 리스트를 보여줍니다.  
@@ -77,7 +79,7 @@ Google Cloud의 DevOps Research and Assessment 팀이 개발한 메트릭스는 
   - 개발 주기시간 요소별로 동그라미 색으로 상태를 확인해 볼 수 있습니다.
 
 ### 💡 Project Delievery 화면
-![Aug-08-2024 02-43-38](https://github.com/user-attachments/assets/1b118e0f-e8d9-4ea1-bc73-c52048b39499)
+![Aug-08-2024 02-43-38](https://github.com/user-attachments/assets/33300b24-64b2-4c29-af46-5d7b8a634db0)
 
 - 페이지 상단에서 팀의 총 프로젝트 수, 프로젝트 참여자 수, 프로젝트 주요작업을 라벨별로 보여줍니다.
 - Project Delivery Tracker List에서 각 프로젝트 별로 프로젝트명, 프로젝트 활동 인원 수, 프로젝트 주요 작업, 프로젝트 달성율을 보여줍니다.
