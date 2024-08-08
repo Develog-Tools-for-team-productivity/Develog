@@ -35,7 +35,7 @@
 - [회고](#회고)
 
 # 📍 Motivation
-문득 매일 아침 출근길에 교통 체증에 갇혀 있는 저를 발견했습니다. 이 시간에 얼마나 많은 일을 할 수 있을까 생각하며, 개발팀도 이런 '체증'에 빠져있진 않을까 고민하게 되었고
+문득 매일 아침 교통 체증에 갇혀 있는 저를 발견했습니다. 이 시간에 얼마나 많은 일을 할 수 있을까 생각하며, 개발팀도 이런 '체증'에 빠져있진 않을까 고민하게 되었고
 교통 정보 앱으로 최적의 경로를 찾아 시간을 절약하는 것처럼, 저희의 개발 과정도 이런 도구가 있으면 좋겠다는 생각이 들었습니다.
 때로는 어디서 시간을 허비하는지, 어떤 작업이 발목을 잡는지 알기 어려웠거든요. 그래서 '개발 내비게이션'을 만들어보기로 했습니다. 이 도구로 팀의 잠재력을 최대한 끌어올리고, 모두가 더 효율적으로, 더 즐겁게 일할 수 있기를 바라며 이 프로젝트를 만들게 되었습니다.
 
@@ -100,7 +100,7 @@ Google Cloud의 DevOps Research and Assessment 팀이 개발한 메트릭스는 
   -  아이디어 선정
   -  기술 스택 결정 및 검증
   - 기획 및 칸반 작업 
-  - <a href="https://www.figma.com/design/rkktZfaO7QhfCLr8TmDG2j/Develog?node-id=0-1&t=gOs2hbK9Xmj1IwZa-0">와이어프레임 작성</a>
+  - <a href="https://www.figma.com/design/rkktZfaO7QhfCLr8TmDG2j/Develog?node-id=0-1&t=KRCxJu0D45xJwZ3c-1">와이어프레임 작성</a>
   - <a href="https://github.com/orgs/Develog-Tools-for-team-productivity/projects/8?pane=issue&itemId=70827543">개발환경 세팅</a>
 - 2주차
   - <a href="https://github.com/orgs/Develog-Tools-for-team-productivity/projects/8/views/1?pane=issue&itemId=70828099">로그인, 회원가입화면 구현</a>
