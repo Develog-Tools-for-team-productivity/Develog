@@ -14,6 +14,7 @@ const PieChart = ({ data }) => {
         display: false,
       },
     },
+    cutout: '70%',
   };
 
   return (
