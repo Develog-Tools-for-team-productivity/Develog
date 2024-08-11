@@ -93,7 +93,7 @@ const CycleTime = () => {
           ]}
           onRepoSelect={handleRepoSelect}
         />
-        <div className={styles.insight}>
+        <div className={styles.oneInsight}>
           <StateCard
             icon={stats.icon}
             value={stats.value}

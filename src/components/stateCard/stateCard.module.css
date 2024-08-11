@@ -124,7 +124,7 @@
 }
 
 .extended {
-  width: calc(100% - 240px);
+  width: 100%;
 }
 
 .content {
@@ -149,9 +149,14 @@
 }
 
 .teamViewContainer .insight {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  grid-template-rows: repeat(2, auto);
+  gap: 20px;
+}
+
+.teamViewContainer .oneInsight {
+  display: grid;
 }
 
 .cycleTimeTeamView .extended {
