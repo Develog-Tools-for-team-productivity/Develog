@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import ReactGA from 'react-ga4';
 
 import Button from '../../components/button/Button';
 import styles from './login.module.css';
@@ -22,6 +23,12 @@ const LoginForm = () => {
   }, [location, navigate]);
 
   const handleGitHubLogin = () => {
+    ReactGA.event({
+      category: 'User',
+      action: 'Clicked the button',
+      label: 'Login button',
+    });
+
     window.location.href = `${import.meta.env.VITE_API_URL}/auth/github`;
   };
 

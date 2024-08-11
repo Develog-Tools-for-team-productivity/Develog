@@ -3,10 +3,12 @@ import {
   Route,
   Routes,
   Navigate,
+  useLocation,
 } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useAtom } from 'jotai';
 import { isLoggedInAtom } from './stores/useStore';
+import ReactGA from 'react-ga4';
 
 import Login from './pages/login/Login';
 import Container from './pages/container/Container';
@@ -79,6 +81,7 @@ function App() {
 
   return (
     <Router>
+      <Tracking />
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/select-repo" element={<SelectedRepo />} />
@@ -126,5 +129,18 @@ function App() {
     </Router>
   );
 }
+
+const Tracking = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    ReactGA.send({
+      hitType: 'pageview',
+      page: location.pathname + location.search,
+    });
+  }, [location]);
+
+  return null;
+};
 
 export default App;
