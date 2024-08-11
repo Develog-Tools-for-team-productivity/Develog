@@ -14,12 +14,15 @@ import SelectedRepo from './pages/login/SelectedRepo';
 import Dashboard from './pages/dashboard/Dashboard';
 import CycleTime from './pages/cycleTime/CycleTime';
 import ProjectDeliveryTracker from './pages/projectDeliveryTracker/ProjectDeliveryTracker';
+import MobileView from './pages/mobileView/MobileView';
+import useIsMobile from './utils/useIsMobile';
 
 import './assets/css/global.css';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const [isLoading, setIsLoading] = useState(true);
+  const isMobile = useIsMobile();
   const token = localStorage.getItem('token');
 
   const validateToken = async token => {
@@ -65,6 +68,10 @@ function App() {
 
     checkAuth();
   }, [token, setIsLoggedIn]);
+
+  if (isMobile) {
+    return <MobileView />;
+  }
 
   if (isLoading) {
     return <div>Loading...</div>;
