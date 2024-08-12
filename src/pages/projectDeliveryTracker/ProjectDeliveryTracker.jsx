@@ -18,6 +18,7 @@ const ProjectDeliveryTracker = () => {
     labelSummary: [],
   });
   const [selectedProject, setSelectedProject] = useState(null);
+  const [selectedProjectHeaders, setSelectedProjectHeaders] = useState(null);
   const [sprint, setSprint] = useState([]);
 
   useEffect(() => {
@@ -84,7 +85,9 @@ const ProjectDeliveryTracker = () => {
 
   const projectData = projectsData.map(project => ({
     peopleEffort: {
-      value: Math.ceil((project.summaryData.activePeople / 3) * 100),
+      value: Math.ceil(
+        (project.summaryData.activePeople / projectsTotal.totalPeople) * 100
+      ),
       mostActive: project.topContributors
         ? project.topContributors.map(contributor => ({
             name: contributor.name,
@@ -149,18 +152,46 @@ const ProjectDeliveryTracker = () => {
 
   const headers = ['Projects', '활동 인원', '프로젝트 주요 작업', '달성율'];
 
-  const projectHeaders = {
-    projectDate: '2024. 07. 14 - 2024. 07. 30',
-    blank1: '\u00A0',
-    blank2: '\u00A0',
-    sprint1: { sprintName: 'sprint1', date: '07. 14 - 07. 17', value: 34 },
-    sprint2: { sprintName: 'sprint2', date: '07. 18 - 07. 21', value: 34 },
-    sprint3: { sprintName: 'sprint3', date: '07. 22 - 07. 25', value: 34 },
-    sprint4: { sprintName: 'sprint4', date: '07. 26 - 07. 30', value: 34 },
+  const formattedProjectDate = (startDate, endDate) => {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    return `${start.getFullYear()}.${start.getMonth() + 1}.${start.getDate()} - ${end.getFullYear()}.${end.getMonth() + 1}.${end.getDate()}`;
   };
+
+  const projectHeadersData = projectsData.map(project => {
+    const sprintObjects = project.sprintActivity.map(sprint => {
+      const startDate = new Date(sprint.startDate);
+      const endDate = new Date(sprint.endDate);
+
+      const formattedStartDate = `${startDate.getMonth() + 1}.${startDate.getDate()}`;
+      const formattedEndDate = `${endDate.getMonth() + 1}.${endDate.getDate()}`;
+
+      return {
+        [sprint.sprintName]: {
+          sprintName: sprint.sprintName,
+          date: `${formattedStartDate} - ${formattedEndDate}`,
+          value: 34,
+        },
+      };
+    });
+
+    const sprintData = Object.assign({}, ...sprintObjects);
+    const projectDate = formattedProjectDate(
+      project.sprintActivity[0]?.startDate,
+      project.sprintActivity[project.sprintActivity.length - 1]?.endDate
+    );
+
+    return {
+      projectDate: projectDate,
+      blank1: '\u00A0',
+      blank2: '\u00A0',
+      ...sprintData,
+    };
+  });
 
   const handleProjectClick = projectIndex => {
     setSelectedProject(projectData[projectIndex]);
+    setSelectedProjectHeaders(projectHeadersData[projectIndex]);
     setIsDefaultView(false);
   };
 
@@ -193,7 +224,10 @@ const ProjectDeliveryTracker = () => {
           />
         ) : (
           selectedProject && (
-            <ProjectList headers={projectHeaders} data={selectedProject} />
+            <ProjectList
+              headers={selectedProjectHeaders}
+              data={selectedProject}
+            />
           )
         )}
       </MainBoard>
