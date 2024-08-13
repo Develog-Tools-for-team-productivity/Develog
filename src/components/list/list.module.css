@@ -161,8 +161,11 @@ tbody tr td:last-child {
 }
 
 .mostActiveImg {
-  background: url('../../assets/img/98510230.png') no-repeat center center;
-  background-size: contain;
+  overflow: hidden;
+}
+
+.mostActiveImg img {
+  width: 100%;
 }
 
 .projectList table {
@@ -252,6 +255,10 @@ tbody tr td:last-child {
 }
 
 .mostActive ul .mostActiveName {
+  width: 60px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-wrap: nowrap;
   font-size: 10px;
   margin-top: 10px;
 }

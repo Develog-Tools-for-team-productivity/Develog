@@ -88,12 +88,7 @@ const ProjectDeliveryTracker = () => {
       value: Math.ceil(
         (project.summaryData.activePeople / projectsTotal.totalPeople) * 100
       ),
-      mostActive: project.topContributors
-        ? project.topContributors.map(contributor => ({
-            name: contributor.name,
-            active: contributor.count,
-          }))
-        : [],
+      mostActive: project.mostActive || [],
     },
     investmentProfile: {
       total: project.overallInvestmentProfile.items,

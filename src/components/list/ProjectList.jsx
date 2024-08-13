@@ -98,7 +98,12 @@ const ProjectList = ({ headers, data }) => {
         <ul>
           {data.peopleEffort.mostActive.map((active, index) => (
             <li key={index}>
-              <span className={styles.mostActiveImg}></span>
+              <span className={styles.mostActiveImg}>
+                <img
+                  src={active.profileImageUrl}
+                  alt="활동량많은 사용자 이미지"
+                />
+              </span>
               <p className={styles.mostActiveName}>{active.name}</p>
               <p className={styles.mostActiveActive}>{active.active}</p>
             </li>
