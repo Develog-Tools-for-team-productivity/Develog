@@ -30,7 +30,18 @@ const generateBarChartData = value => ({
 });
 
 const separateBarChartData = values => {
-  if (!values) return { labels: [], datasets: [] };
+  if (!values || values.length === 0) {
+    return {
+      labels: ['No Data'],
+      datasets: [
+        {
+          data: [100],
+          backgroundColor: [remainingColor],
+        },
+      ],
+    };
+  }
+
   const percentageValues = generatePercentageChartData(values);
   return {
     labels: ['Sprint Value'],
@@ -110,59 +121,70 @@ const ProjectList = ({ headers, data }) => {
           ))}
         </ul>
       </td>
-      {headerKeys.map(
-        (key, index) =>
-          headers[key].sprintName && (
-            <td key={index}>
-              <div className={styles.projectGraph}>
-                <BarChart data={generateBarChartData(headers[key].value)} />
-              </div>
-            </td>
-          )
-      )}
+      {data.peopleEffort.sprintsActivePeople.map((sprint, index) => (
+        <td key={index}>
+          <div className={styles.projectGraph}>
+            <BarChart
+              data={generateBarChartData(sprint.activeIssuePercentage)}
+            />
+          </div>
+        </td>
+      ))}
     </tr>
   );
 
-  const renderInvestmentProfileRow = () => (
-    <tr>
-      <td>
-        <span className={styles.investmentProfile}></span>
-        프로젝트 주요 작업
-      </td>
-      <td>
-        <div className={styles.projectGraph}>
-          <PieChart
-            data={generateChartData(
-              data.investmentProfile.total.map(item => item.label),
-              data.investmentProfile.total.map(item => item.value)
-            )}
-          />
-        </div>
-      </td>
-      <td className={styles.chartList}>
-        <ul>
-          {data.investmentProfile.total.map((item, index) => (
-            <li key={index}>
-              <span
-                className={styles.chartColor}
-                style={{ backgroundColor: chartColors[index] }}
-              ></span>
-              {item.value}% {item.label}
-            </li>
-          ))}
-        </ul>
-      </td>
-      {Object.entries(data.investmentProfile.sprints).map(
-        ([sprint, values], index) => (
+  const renderInvestmentProfileRow = () => {
+    const transformInvestmentProfile = profile => {
+      if (!profile || profile.length === 0) return [];
+      return profile.map(item => ({
+        label: item.label,
+        value: parseFloat(item.ratio),
+      }));
+    };
+
+    return (
+      <tr>
+        <td>
+          <span className={styles.investmentProfile}></span>
+          프로젝트 주요 작업
+        </td>
+        <td>
+          <div className={styles.projectGraph}>
+            <PieChart
+              data={generateChartData(
+                data.investmentProfile.total.map(item => item.label),
+                data.investmentProfile.total.map(item => item.value)
+              )}
+            />
+          </div>
+        </td>
+        <td className={styles.chartList}>
+          <ul>
+            {data.investmentProfile.total.map((item, index) => (
+              <li key={index}>
+                <span
+                  className={styles.chartColor}
+                  style={{ backgroundColor: chartColors[index] }}
+                ></span>
+                {item.percentage}% {item.label}
+              </li>
+            ))}
+          </ul>
+        </td>
+        {data.investmentProfile.sprints.map((sprint, index) => (
           <td key={index}>
             <div className={styles.projectGraph}>
-              <BarChart data={separateBarChartData(values)} />
+              <BarChart
+                data={separateBarChartData(
+                  transformInvestmentProfile(sprint.investmentProfile)
+                )}
+              />
             </div>
           </td>
-        )
-      )}
-    </tr>
-  );
+        ))}
+      </tr>
+    );
+  };
 
   const renderProjectDeliveryRow = () => (
     <tr>

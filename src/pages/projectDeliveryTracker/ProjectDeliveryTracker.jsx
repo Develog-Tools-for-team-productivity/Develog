@@ -63,25 +63,10 @@ const ProjectDeliveryTracker = () => {
     investmentProfile: project.overallInvestmentProfile.items,
     delivery: {
       icon: 'delivery',
-      value: `${project.planningAccuracy ? project.planningAccuracy.overall : 0}%`,
+      value: `${project.planningAccuracy?.total || 0}%`,
       label: 'Planning Accuracy',
     },
   }));
-
-  const createSprintData = sprintData => {
-    if (!sprintData || !Array.isArray(sprintData)) {
-      return {};
-    }
-
-    const sprintMap = {};
-    sprintData.forEach((sprint, index) => {
-      sprintMap[`sprint${index + 1}`] = sprint.labelRatios.map(labelRatio => ({
-        label: labelRatio.label,
-        value: parseFloat(labelRatio.ratio),
-      }));
-    });
-    return sprintMap;
-  };
 
   const projectData = projectsData.map(project => ({
     peopleEffort: {
@@ -89,50 +74,35 @@ const ProjectDeliveryTracker = () => {
         (project.summaryData.activePeople / projectsTotal.totalPeople) * 100
       ),
       mostActive: project.mostActive || [],
+      sprintsActivePeople: project.sprintActivity.map(sprint => ({
+        ...sprint,
+        activeIssuePercentage: Math.round(
+          (sprint.activeIssuePeople / projectsTotal.totalPeople) * 100
+        ),
+      })),
     },
     investmentProfile: {
-      total: project.overallInvestmentProfile.items,
-      sprints: sprint ? createSprintData(sprint) : {},
+      total: project.overallInvestmentProfile.items.map(item => ({
+        ...item,
+        investmentProfilePercentage: parseFloat(item.percentage),
+      })),
+      totalCount: project.overallInvestmentProfile.totalCount,
+      sprints: project.sprintInvestmentProfiles,
     },
-    projectDelivery: project.projectDeliveryMetrics
-      ? {
-          total: [
-            { label: 'Added', value: 6 },
-            { label: 'Complete', value: 12 },
-            { label: 'Carryover', value: 0 },
-          ],
-          sprints: {
-            sprint1: [
-              { label: 'Added', value: 2 },
-              { label: 'Complete', value: 6 },
-              { label: 'Carryover', value: 0 },
-            ],
-            sprint2: [
-              { label: 'Added', value: 2 },
-              { label: 'Complete', value: 3 },
-              { label: 'Carryover', value: 0 },
-            ],
-            sprint3: [
-              { label: 'Added', value: 2 },
-              { label: 'Complete', value: 2 },
-              { label: 'Carryover', value: 0 },
-            ],
-            sprint4: [
-              { label: 'Added', value: 0 },
-              { label: 'Complete', value: 1 },
-              { label: 'Carryover', value: 0 },
-            ],
-          },
-        }
-      : { total: [], sprints: {} },
+    projectDelivery: project.projectDeliveryMetrics,
     planningAccuracy: {
-      total: project.planningAccuracy ? project.planningAccuracy.overall : 0,
-      sprints: {
-        sprint1: { sprintName: 'sprint1', value: 50 },
-        sprint2: { sprintName: 'sprint2', value: 20 },
-        sprint3: { sprintName: 'sprint3', value: 5 },
-        sprint4: { sprintName: 'sprint4', value: 5 },
-      },
+      total: project.planningAccuracy?.total || 0,
+      sprints: project.planningAccuracy?.sprints
+        ? Object.fromEntries(
+            project.planningAccuracy.sprints.map(sprint => [
+              sprint.sprintName,
+              {
+                sprintName: sprint.sprintName,
+                value: sprint.value,
+              },
+            ])
+          )
+        : {},
     },
   }));
 
@@ -165,7 +135,6 @@ const ProjectDeliveryTracker = () => {
         [sprint.sprintName]: {
           sprintName: sprint.sprintName,
           date: `${formattedStartDate} - ${formattedEndDate}`,
-          value: 34,
         },
       };
     });
