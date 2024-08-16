@@ -20,21 +20,29 @@ const ProjectDeliveryTracker = () => {
   const [selectedProject, setSelectedProject] = useState(null);
   const [selectedProjectHeaders, setSelectedProjectHeaders] = useState(null);
   const [sprint, setSprint] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetchProjectData();
   }, []);
 
   const fetchProjectData = async () => {
+    setIsLoading(true);
+
     try {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/projects`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
+          'Content-Type': 'application/json',
         },
       });
-      if (!response.ok)
+
+      if (!response.ok) {
         throw new Error('프로젝트 데이터 가져오기에 실패했습니다.');
+      }
+
       const data = await response.json();
+
       setProjectsData(data.projectDeliveryData || []);
       setProjectsTotal(
         data.summaryData || {
@@ -46,11 +54,17 @@ const ProjectDeliveryTracker = () => {
       setSprint(data.iterationLabelRations);
     } catch (error) {
       console.error('프로젝트 데이터 받는 중 오류가 생겼습니다', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  if (!projectsData || projectsData.length === 0) {
+  if (isLoading) {
     return <div>Loading...</div>;
+  }
+
+  if (!projectsData || projectsData.length === 0) {
+    return <div>프로젝트 데이터가 없습니다.</div>;
   }
 
   const cycleTimeData = projectsData.map(project => ({
