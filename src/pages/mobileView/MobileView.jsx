@@ -1,4 +1,5 @@
 import styles from './mobileView.module.css';
+import illustImg from '../../assets/img/illustImg.png';
 
 function MobileView() {
   return (
@@ -9,7 +10,7 @@ function MobileView() {
         버전을 이용해주세요 🖥️
       </span>
       <div className={styles.mobile_img}>
-        <img src="../src/assets/img/illustImg.png" alt="illust" />
+        <img src={illustImg} alt="illust" />
       </div>
     </div>
   );
