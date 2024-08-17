@@ -40,7 +40,16 @@ function renderItems(items, icon) {
   return items.map((item, index) => (
     <React.Fragment key={index}>
       <div className={styles.item}>
-        <span className={styles.label}>{item.label}</span>
+        <span className={styles.label}>
+          {item.label}{' '}
+          {['Coding', 'PR 대기 시간', '코드 리뷰', '배포'].includes(
+            item.label
+          ) && (
+            <span
+              className={`${styles.mark} ${styles[determineStatusColor(item.label, item.value)]}`}
+            ></span>
+          )}
+        </span>
         <span className={styles.value}>{item.value}</span>
         {icon === 'investmentProfile' && (
           <div
@@ -49,13 +58,6 @@ function renderItems(items, icon) {
               backgroundColor: chartColors[index % chartColors.length],
             }}
           ></div>
-        )}
-        {['Coding', 'PR 대기 시간', '코드 리뷰', '배포'].includes(
-          item.label
-        ) && (
-          <span
-            className={`${styles.mark} ${styles[determineStatusColor(item.label, item.value)]}`}
-          ></span>
         )}
       </div>
       {icon === 'cycleTime' && index < items.length - 1 && (
