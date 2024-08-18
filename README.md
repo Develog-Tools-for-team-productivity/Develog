@@ -43,11 +43,11 @@
 
 # 📍 목차
 
-- [프로젝트를 진행하게 된 이유](#-motivation)
-- [DORAMetrics란?](#-dora-metrics란)
-- [Features](#-features)
-- [Challenges](#-challenges)
-- [Scheduls](#-scheduls)
+- [DORAMetrics란?](#-dorametrics란)
+- [사용자에게 어떻게 데이터를 한눈에 보여줄 수 있을까?](#-사용자에게-어떻게-데이터를-한눈에-보여줄-수-있을까)
+- [Develog의 화면 별 기능들](#-develog의-화면-별-기능들)
+- [프로젝트를 진행하며 고민했던 점](#-프로젝트를-진행하며-고민했던-점)
+- [Schedules](#-schedules)
 - [회고](#-회고)
 
 # 📍 DORAMetrics란?
@@ -69,14 +69,18 @@
 
 <img src="https://github.com/user-attachments/assets/14045fd8-7d8a-40cb-b1c5-5b9eed9bf0b1" width="600" alt="데이터베이스"><br>
 <br>
-프로젝트 기획단계에서 많은 양의 데이터를 사용자에게 어떻게 효율적으로 시각화하여 전달할 수 있을까하는 고민을 하였습니다.<br><br>
-<img src="https://github.com/user-attachments/assets/6ec51e74-e512-4bb3-a289-034e76e380ec" width="600" alt="대쉬보드이미지"><br>
+프로젝트 기획단계에서 많은 양의 데이터를 사용자에게 어떻게 효율적으로 시각화하여 전달할 수 있을까하는 고민을 하였습니다.<br>
+집계 데이터를 효과적으로 시각화하고 사용자에게 직관적으로 제공하기 위해 도넛 차트와 선 차트로 사용자가 쉽게 확인 할 수 있도록 하였습니다.
+<br><br>
+<img src="https://github.com/user-attachments/assets/9daf56e1-e971-488b-abe1-e239b52decb6" width="600" alt="대쉬보드이미지"><br>
+<img src="https://github.com/user-attachments/assets/e72ca6d9-904a-4871-a196-7d0575eca41d" width="600" alt="대쉬보드이미지"><br>
 <br>
-먼저 상단에 페이지마다 팀의 핵심 지표를 간단히 표시하고, 하단에는 DORA Metrics, Cycle Time by PullRequest, Project Delivery Tracker List를 배치하여 정보를 구조화했습니다. 그리고 이미 많은 양의 정보를 제공하고 있어서 기준을 텍스트로 따로 전달하기보다 색으로 표현하여 사용자가 한눈에 상태를 파악할 수 있도록 기획했습니다.
+상단에 팀 전체의 지표를 표시하고, 하단에는 DORA Metrics, Cycle Time by PullRequest, Project Delivery Tracker List를 배치하여 인터페이스를 섹션화하고 데이터를 구조화 하였습니다. 이렇게 구조화하여 핵심 정보와 세부 정보를 구분하여 사용자가 필요한 정보를 쉽게 찾을 수 있도록 하였습니다.
+그리고 이미 많은 양의 정보를 제공하고 있어서 기준을 텍스트로 따로 전달하기보다 색으로 표현하여 사용자가 한눈에 상태를 파악할 수 있도록 기획했습니다.
 <br>
 <br>
 
-# 📍 Develop의 화면 별 기능들
+# 📍 Develog의 화면 별 기능들
 
 ### 1. 로그인 화면
 
@@ -196,7 +200,7 @@ webhook 요청의 진위를 확인하는 것이 중요합니다. secret token을
 
 - 추후 리팩토링 후 작성 예정입니다.
 
-# 📍 Scheduls
+# 📍 Schedules
 
 - 1주차
   - 아이디어 선정
