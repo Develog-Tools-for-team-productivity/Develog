@@ -70,7 +70,7 @@
 <img src="https://github.com/user-attachments/assets/14045fd8-7d8a-40cb-b1c5-5b9eed9bf0b1" width="600" alt="데이터베이스"><br>
 <br>
 프로젝트 기획단계에서 많은 양의 데이터를 사용자에게 어떻게 효율적으로 시각화하여 전달할 수 있을까하는 고민을 하였습니다.<br>
-<img width="450" alt="스크린샷 2024-08-19 오후 2 34 34" src="https://github.com/user-attachments/assets/18027d20-37d6-4802-83b7-f234274ee836">
+<img width="450" alt="스크린샷 2024-08-19 오후 2 34 34" src="https://github.com/user-attachments/assets/18027d20-37d6-4802-83b7-f234274ee836"><br>
 집계 데이터를 효과적으로 시각화하고 사용자에게 직관적으로 제공하기 위해 도넛 차트와 선 차트로 사용자가 쉽게 확인 할 수 있도록 하였습니다.
 <br><br>
 <img src="https://github.com/user-attachments/assets/9daf56e1-e971-488b-abe1-e239b52decb6" width="600" alt="대쉬보드이미지"><br>
