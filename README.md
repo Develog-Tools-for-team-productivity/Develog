@@ -70,6 +70,7 @@
 <img src="https://github.com/user-attachments/assets/14045fd8-7d8a-40cb-b1c5-5b9eed9bf0b1" width="600" alt="데이터베이스"><br>
 <br>
 프로젝트 기획단계에서 많은 양의 데이터를 사용자에게 어떻게 효율적으로 시각화하여 전달할 수 있을까하는 고민을 하였습니다.<br>
+<img width="450" alt="스크린샷 2024-08-19 오후 2 34 34" src="https://github.com/user-attachments/assets/18027d20-37d6-4802-83b7-f234274ee836">
 집계 데이터를 효과적으로 시각화하고 사용자에게 직관적으로 제공하기 위해 도넛 차트와 선 차트로 사용자가 쉽게 확인 할 수 있도록 하였습니다.
 <br><br>
 <img src="https://github.com/user-attachments/assets/9daf56e1-e971-488b-abe1-e239b52decb6" width="600" alt="대쉬보드이미지"><br>
@@ -144,7 +145,9 @@ Develog 프로젝트를 통해 처음으로 실제 데이터베이스 설계와 
 ### 3-1. 요구 사항 분석
 
 - 사용자와의 커뮤니케이션: GitHub 기반의 프로젝트 관리 시스템에 대한 니즈를 확인
-- 시스템 목표 정의: GitHub 저장소와 연동하여 프로젝트 및 스프린트 성과 추적, 팀원들의 활동 및 성과 추적 가능, 버그 해결 시간 모니터링, PR 처리 효율성 분석
+- 시스템 목표 정의: GitHub 저장소와 연동하여 프로젝트 및 스프린트 성과 추적, 팀원들의 활동 및 성과 추적 가능, 버그 해결 시간 모니터링, PR 처리 효율성 분석<br>
+  <img width="295" alt="스크린샷 2024-08-19 오후 2 35 46" src="https://github.com/user-attachments/assets/52866690-8014-4f1c-aa07-886c3f6c223c">
+  <img width="250" alt="스크린샷 2024-08-19 오후 2 35 11" src="https://github.com/user-attachments/assets/f3727e85-3cb8-4ded-a2c1-155bb0494f75"><br>
 - 요구 사항 정리 및 검토: 필요한 데이터 항목 리스트 작성 (프로젝트, 스프린트, 이슈, PR 등), 각 데이터 항목별 필요한 세부 정보 정의
 
 ### 3-2. 개념적 설계
