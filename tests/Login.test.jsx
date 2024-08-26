@@ -1,58 +1,66 @@
-import '@testing-library/jest-dom';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { Provider } from 'jotai';
-import { BrowserRouter } from 'react-router-dom';
-import Login from '../src/pages/login/Login';
+import LoginForm from '../src/pages/login/LoginForm';
 
-vi.mock('react-router-dom', async () => {
-  const actual = await vi.importActual('react-router-dom');
+const mockNavigate = vi.fn();
+const mockLocation = vi.fn(() => ({ search: '' }));
+
+vi.mock('react-router-dom', async importOriginal => {
+  const actual = await importOriginal();
   return {
     ...actual,
-    useNavigate: () => vi.fn(),
+    useNavigate: () => mockNavigate,
+    useLocation: () => mockLocation(),
   };
 });
 
-describe('Login Component', () => {
-  it('shows SignUpForm inputs when Sign up is clicked', async () => {
+describe('LoginForm', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    mockLocation.mockReturnValue({ search: '' });
+    Object.defineProperty(window, 'location', {
+      value: { href: 'http://localhost:3000/' },
+      writable: true,
+    });
+  });
+
+  it('GitHub 로그인 버튼을 렌더링합니다', () => {
+    const { MemoryRouter } = require('react-router-dom');
     render(
-      <Provider>
-        <BrowserRouter>
-          <Login />
-        </BrowserRouter>
-      </Provider>
+      <MemoryRouter>
+        <LoginForm />
+      </MemoryRouter>
     );
 
-    expect(
-      screen.getByPlaceholderText('Email을 입력해주세요')
-    ).toBeInTheDocument();
-    expect(
-      screen.getByPlaceholderText('Password을 입력해주세요')
-    ).toBeInTheDocument();
-    expect(screen.getByText('Sign in')).toBeInTheDocument();
-    expect(
-      screen.queryByPlaceholderText('Team Name을 입력해주세요')
-    ).not.toBeInTheDocument();
-    expect(
-      screen.queryByPlaceholderText('GitHub Token을 입력해주세요')
-    ).not.toBeInTheDocument();
+    expect(screen.getByText('GitHub로 로그인')).toBeDefined();
+  });
 
-    const signUpText = screen.getByText('Sign up');
-    fireEvent.click(signUpText);
+  it('버튼을 클릭하면 GitHub 인증 URL로 리디렉션됩니다', () => {
+    const { MemoryRouter } = require('react-router-dom');
 
-    expect(
-      screen.getByPlaceholderText('Email을 입력해주세요')
-    ).toBeInTheDocument();
-    expect(
-      screen.getByPlaceholderText('Password을 입력해주세요')
-    ).toBeInTheDocument();
-    expect(
-      screen.getByPlaceholderText('Team Name을 입력해주세요')
-    ).toBeInTheDocument();
-    expect(
-      screen.getByPlaceholderText('GitHub Token을 입력해주세요')
-    ).toBeInTheDocument();
-    expect(screen.getByText('인증하기')).toBeInTheDocument();
-    expect(screen.getByText('Sign up')).toBeInTheDocument();
+    render(
+      <MemoryRouter>
+        <LoginForm />
+      </MemoryRouter>
+    );
+
+    const button = screen.getByText('GitHub로 로그인');
+    fireEvent.click(button);
+
+    expect(window.location.href).contain('/auth/github');
+  });
+
+  it('토큰으로 성공적인 로그인을 처리합니다', () => {
+    const { MemoryRouter } = require('react-router-dom');
+    mockLocation.mockReturnValue({ search: 'token=test-token' });
+
+    render(
+      <MemoryRouter>
+        <LoginForm />
+      </MemoryRouter>
+    );
+
+    expect(localStorage.getItem('token')).toBe('test-token');
+    expect(mockNavigate).toHaveBeenCalledWith('/select-repo');
   });
 });

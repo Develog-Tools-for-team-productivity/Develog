@@ -10,7 +10,9 @@
     "preview": "vite preview",
     "prepare": "husky",
     "sort:css": "postcss '**/*.css' --replace",
-    "test": "vitest"
+    "test": "vitest",
+    "coverage": "vitest run --coverage",
+    "test-ui": "vitest --ui"
   },
   "dependencies": {
     "chart.js": "^4.4.3",
@@ -30,6 +32,8 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
+    "@vitest/coverage-v8": "^2.0.5",
+    "@vitest/ui": "^2.0.5",
     "eslint": "^8.57.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^9.1.0",

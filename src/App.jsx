@@ -10,10 +10,10 @@ import { useAtom } from 'jotai';
 import { isLoggedInAtom } from './stores/useStore';
 import ReactGA from 'react-ga4';
 
-import Login from './pages/login/Login';
+import Login from './pages/Login/Login';
 import Container from './pages/container/Container';
-import SelectedRepo from './pages/login/SelectedRepo';
-import Dashboard from './pages/dashboard/Dashboard';
+import SelectedRepo from './pages/Login/SelectedRepo';
+import Dashboard from './pages/Dashboard/Dashboard';
 import CycleTime from './pages/cycleTime/CycleTime';
 import ProjectDeliveryTracker from './pages/projectDeliveryTracker/ProjectDeliveryTracker';
 import MobileView from './pages/mobileView/MobileView';
