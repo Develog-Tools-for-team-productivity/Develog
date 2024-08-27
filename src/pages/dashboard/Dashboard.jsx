@@ -1,7 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useAtom } from 'jotai';
-import { dateRangeAtom } from '../../stores/useStore';
+import {
+  dateRangeAtom,
+  statsAtom,
+  extendedStatsAtom,
+  lastFetchedDateRangeAtom,
+  stateFetchDateRangeAtom,
+} from '../../stores/useStore';
 import { fetchDateData } from '../../utils/api';
 
 import Header from '../../components/header/Header';
@@ -13,19 +19,24 @@ import DoraMetrics from '../../components/dorametrics/DoraMetrics';
 import styles from '../../components/stateCard/stateCard.module.css';
 
 const Dashboard = () => {
-  const [stats, setStats] = useState([]);
-  const [extendedStats, setExtendedStats] = useState({});
+  const [stats, setStats] = useAtom(statsAtom);
+  const [extendedStats, setExtendedStats] = useAtom(extendedStatsAtom);
   const [dateRange, setDateRange] = useAtom(dateRangeAtom);
+  const [lastFetchedDateRange, setLastFetchedDateRange] = useAtom(
+    lastFetchedDateRangeAtom
+  );
+  const [stateFetchDateRange, setStateFetchDateRange] = useAtom(
+    stateFetchDateRangeAtom
+  );
   const location = useLocation();
 
   useEffect(() => {
-    const endDate = new Date();
-    const startDate = new Date(endDate);
-    startDate.setDate(startDate.getDate() - 10);
+    const startDate = dateRange.startDate;
+    const endDate = dateRange.endDate;
 
     setDateRange({
-      startDate: startDate.toISOString().split('T')[0],
-      endDate: endDate.toISOString().split('T')[0],
+      startDate: startDate,
+      endDate: endDate,
     });
   }, [location]);
 
@@ -34,20 +45,41 @@ const Dashboard = () => {
       const data = await fetchDateData(startDate, endDate);
       setStats(data.stats);
       setExtendedStats(data.extendedStats);
+      setLastFetchedDateRange({ startDate, endDate });
     } catch (error) {
       console.error('데이터 가져오기 중 오류 발생:', error);
     }
   };
 
   const handleDateRangeChange = (startDate, endDate) => {
-    fetchUserData(startDate, endDate);
+    if (startDate) fetchUserData(startDate, endDate);
+  };
+
+  const isDateRangeChanged = (lastDate, currentDate) => {
+    return (
+      !lastDate.startDate ||
+      !lastDate.endDate ||
+      lastDate.startDate !== currentDate.startDate ||
+      lastDate.endDate !== currentDate.endDate
+    );
   };
 
   useEffect(() => {
     if (dateRange.startDate && dateRange.endDate) {
-      fetchUserData(dateRange.startDate, dateRange.endDate);
+      const isLastFetchedDateRangeChanged = isDateRangeChanged(
+        lastFetchedDateRange,
+        dateRange
+      );
+      const isStateFetchDateRangeChanged = isDateRangeChanged(
+        stateFetchDateRange,
+        lastFetchedDateRange
+      );
+
+      if (isLastFetchedDateRangeChanged && isStateFetchDateRangeChanged) {
+        fetchUserData(dateRange.startDate, dateRange.endDate);
+      }
     }
-  }, [dateRange]);
+  }, [dateRange, lastFetchedDateRange, stateFetchDateRange]);
 
   return (
     <>

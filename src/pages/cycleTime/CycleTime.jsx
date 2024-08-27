@@ -1,7 +1,14 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useAtom } from 'jotai';
-import { dateRangeAtom } from '../../stores/useStore';
+import {
+  dateRangeAtom,
+  stateFetchDateRangeAtom,
+  lastFetchedDateRangeAtom,
+  extendedStatsAtom,
+  cycleTimeListDataAtom,
+  statsAtom,
+} from '../../stores/useStore';
 import Header from '../../components/header/Header';
 import TeamViewHeader from '../../components/header/TeamViewHeader';
 import StateCard from '../../components/stateCard/StateCard';
@@ -13,26 +20,31 @@ import { HEADERS } from '../../constants/cycleTimeConstants';
 import styles from '../../components/stateCard/stateCard.module.css';
 
 const CycleTime = () => {
-  const [stats, setStats] = useState({});
-  const [extendedStats, setExtendedStats] = useState({});
-  const [cycleTimeListData, setCycleTimeListData] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
-  const [selectedRepo, setSelectedRepo] = useState('average');
-  const [selectedRepositories, setSelectedRepositories] = useState([]);
+  const [stats, setStats] = useAtom(statsAtom);
+  const [extendedStats, setExtendedStats] = useAtom(extendedStatsAtom);
+  const [cycleTimeListData, setCycleTimeListData] = useAtom(
+    cycleTimeListDataAtom
+  );
   const [dateRange, setDateRange] = useAtom(dateRangeAtom);
+  const [stateFetchDateRange, setStateFetchDateRange] = useAtom(
+    stateFetchDateRangeAtom
+  );
+  const [lastFetchedDateRange, setLastFetchedDateRange] = useAtom(
+    lastFetchedDateRangeAtom
+  );
   const [error, setError] = useState(null);
 
   const location = useLocation();
   const { fetchCycleTimeData } = useFetchCycleTimeData();
+  const cycleTimeStat = stats[1];
 
   useEffect(() => {
-    const endDate = new Date();
-    const startDate = new Date(endDate);
-    startDate.setDate(startDate.getDate() - 10);
+    const startDate = dateRange.startDate;
+    const endDate = dateRange.endDate;
 
     setDateRange({
-      startDate: startDate.toISOString().split('T')[0],
-      endDate: endDate.toISOString().split('T')[0],
+      startDate: startDate,
+      endDate: endDate,
     });
   }, [location]);
 
@@ -42,39 +54,30 @@ const CycleTime = () => {
         dateRange.startDate,
         dateRange.endDate
       );
-      setStats(data.stats[1]);
+      setStats(data.stats);
       setExtendedStats(data.extendedStats);
       setCycleTimeListData(data.cycleTimeListData);
-      setSelectedRepositories(data.selectedRepositories);
-      filterData(data.cycleTimeListData, selectedRepo);
       setError(null);
     } catch (err) {
       console.error('Error fetching data:', err);
       setError('데이터를 가져오는 중 오류가 발생했습니다.');
     }
-  }, [dateRange, selectedRepo, fetchCycleTimeData]);
+  }, [dateRange, fetchCycleTimeData]);
 
   useEffect(() => {
-    if (dateRange.startDate && dateRange.endDate) {
+    if (
+      !stateFetchDateRange.startDate ||
+      !stateFetchDateRange.endDate ||
+      lastFetchedDateRange.startDate !== dateRange.startDate ||
+      lastFetchedDateRange.endDate !== dateRange.endDate
+    ) {
       fetchData();
+      setStateFetchDateRange(dateRange);
     }
   }, [dateRange, fetchData]);
 
   const handleDateRangeChange = (startDate, endDate) => {
     setDateRange({ startDate, endDate });
-  };
-
-  const handleRepoSelect = repoId => {
-    setSelectedRepo(repoId);
-    filterData(cycleTimeListData, repoId);
-  };
-
-  const filterData = (data, repoId) => {
-    const filtered =
-      repoId === 'average'
-        ? data
-        : data.filter(item => item.repositories === repoId);
-    setFilteredData(filtered);
   };
 
   return (
@@ -84,26 +87,18 @@ const CycleTime = () => {
         <TeamViewHeader
           dateSelect={true}
           onDateRangeChange={handleDateRangeChange}
-          options={[
-            { id: 'average', name: 'All Repositories' },
-            ...selectedRepositories.map(repo => ({
-              id: repo.id,
-              name: repo.name,
-            })),
-          ]}
-          onRepoSelect={handleRepoSelect}
         />
         <div className={styles.oneInsight}>
           <StateCard
-            icon={stats.icon}
-            value={stats.value}
-            label={stats.label}
+            icon={cycleTimeStat?.icon}
+            value={cycleTimeStat?.value}
+            label={cycleTimeStat?.label}
             extendedStats={extendedStats}
           />
         </div>
       </div>
       <MainBoard boardTitle="Cycle Time by PullRequest">
-        <CommonList headers={HEADERS} data={filteredData} />
+        <CommonList headers={HEADERS} data={cycleTimeListData} />
       </MainBoard>
       {error && <div className={styles.error}>{error}</div>}
     </>
