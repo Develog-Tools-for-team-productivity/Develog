@@ -186,6 +186,19 @@ Develog 프로젝트를 통해 처음으로 실제 데이터베이스 설계와 
 
 - 데이터 저장 구조: MongoDB의 문서 기반 저장 구조 활용(BSON(Binary JSON) 형식으로 데이터를 저장)
 
+### 3-5. 중복된 데이터의 네트워크 요청, 전역 상태 관리를 통한 개선
+
+<img src="https://github.com/user-attachments/assets/a3b1f091-6d72-4c0e-87d3-8efa4e8a5c7f" width="600" alt="대시보드">
+<img src="https://github.com/user-attachments/assets/04e5324b-42dc-461a-b3ad-d38132f19800" width="600" alt="싸이클타임"> <br>
+
+Dashboard와 CycleTime 페이지에서 공통으로 사용되는 작업 주기 시간 데이터를 <b>Jotai의 Atom으로 중앙 관리</b>함으로써,<br> 불필요한 네트워크 요청을 줄이고 데이터 일관성을 유지했습니다.
+<br>
+
+<img src="https://github.com/user-attachments/assets/823a21a7-2866-482b-b141-b6332acd8ea4" width="600" alt="대시보드">
+<img src="https://github.com/user-attachments/assets/a6725532-923f-4e44-b898-e16a3fcf99f1" width="600" alt="싸이클타임"><br>
+
+사용자 경험 향상을 위해, 선택한 날짜 범위가 다른 페이지로 이동해도 유지되도록 구현했습니다.<br> 또한, <b>페이지 간 이동 시 날짜 범위가 변경되지 않았다면 이전에 fetch한 데이터를 재사용하여 성능을 최적화</b>했습니다.<br> 이를 통해 애플리케이션의 속도를 개선하고, 사용자에게 더 일관된 경험을 제공할 수 있었습니다.
+
 ## 4. GitHub OAuth로 로그인 기능 구현 및 JWT 토큰 생성으로 보안 기능 구현
 
 ### 4-1. OAuth 란?
